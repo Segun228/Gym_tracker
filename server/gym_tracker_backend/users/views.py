@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import AppUserSerializer
 
 
@@ -22,5 +22,13 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        serializer = AppUserSerializer(data=request.data)
+        pass
+
+
+class MeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
         serializer = AppUserSerializer(data=request.data)
         pass

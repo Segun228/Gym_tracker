@@ -1,9 +1,9 @@
 
-
+import { PanelSpinner } from "@vkontakte/vkui";
 export const App = () => {
 
 
   return (
-    <div>Huyna</div>
+    <PanelSpinner />
   );
 };
