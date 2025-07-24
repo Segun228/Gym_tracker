@@ -5,7 +5,7 @@ import {
 const WorkoutsPanel = () => {
     return ( 
     <Panel>
-
+        
     </Panel>);
 }
 

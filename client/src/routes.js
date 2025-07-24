@@ -28,7 +28,8 @@ export const DEFAULT_VIEW_PANELS = {
   WORKOUT_EXERCISE: 'exact_exercise_panel',
 };
 
-export const routes = [
+// ⬇️ Оборачиваем в RoutesConfig.create
+export const routes = RoutesConfig.create([
   createRoot(DEFAULT_ROOT, [
     createView(
       DEFAULT_VIEW.HOME,
@@ -66,6 +67,7 @@ export const routes = [
       { path: '/workouts/:workout_id/exercises/:exercise_id' }
     ),
   ]),
-];
+]);
+
 
 export const router = createHashRouter(routes.getRoutes());
