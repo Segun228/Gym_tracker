@@ -22,7 +22,7 @@ class Workout(models.Model):
     date = models.DateField(auto_now_add=True)
     note = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    ended_at = models.DateTimeField()
+    duration = models.TimeField(default=datetime.time(0, 0))
     updated_at = models.DateTimeField(auto_now=True)
     callories_burnt = models.IntegerField(default=0)
 
@@ -53,7 +53,7 @@ class Set(models.Model):
     workout_exercise_id = models.ForeignKey(WorkoutExercise, on_delete=models.CASCADE, related_name='sets')
     weight = models.IntegerField(default=0)
     reps = models.IntegerField(default=0)
-    duration = models.TimeField(default=datetime.time(0, 0))
+    duration = models.TimeField(default=datetime.time(0, 0), null=True, blank=True)
     order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

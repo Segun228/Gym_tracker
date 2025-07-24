@@ -1,0 +1,1 @@
+export const MAIN_URL = "/public/fake_data.json"
