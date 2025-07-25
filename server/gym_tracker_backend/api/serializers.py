@@ -1,25 +1,57 @@
-from rest_framework.serializers import ModelSerializer
-from api.models import ExerciseTemplate, Workout, WorkoutExercise, Set
+from rest_framework import serializers
+from .models import ExerciseTemplate, Workout, WorkoutExercise, Set
 
-class ExerciseTemplateSerializer(ModelSerializer):
+
+
+
+
+
+class ExerciseTemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExerciseTemplate
         fields = ["name", "muscle_group"]
 
 
-class WorkoutSerializer(ModelSerializer):
+class SetSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Workout
-        fields = ["note", "duration"]
+        model = Set
+        fields = ["weight", "reps", "duration", "order"]
 
 
-class WorkoutExerciseSerializer(ModelSerializer):
+class WorkoutExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkoutExercise
         fields = ["template_id", "order"]
 
 
-class SetSerializer(ModelSerializer):
+class WorkoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workout
+        fields = ["note", "duration"]
+
+
+
+
+
+
+class SetReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Set
-        fields = ["weight", "reps", "duration", "order"]
+        fields = ["weight", "reps", "duration", "order", "created_at"]
+
+
+class WorkoutExerciseReadSerializer(serializers.ModelSerializer):
+    sets = SetReadSerializer(many=True, read_only=True)
+    template = ExerciseTemplateSerializer(source="template_id", read_only=True)
+
+    class Meta:
+        model = WorkoutExercise
+        fields = ["template", "order", "sets", "created_at"]
+
+
+class WorkoutReadSerializer(serializers.ModelSerializer):
+    workout_exercises = WorkoutExerciseReadSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Workout
+        fields = ["note", "duration", "workout_exercises", "created_at"]

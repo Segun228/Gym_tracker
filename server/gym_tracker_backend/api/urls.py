@@ -1,7 +1,5 @@
 from django.urls import path
-from api.views import (
-
-)
+from api.views import 
 
 urlpatterns = [
     path('workouts/', pass, name='workout-list'),
