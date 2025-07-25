@@ -5,11 +5,12 @@ import handleLog from "../../../helpers/handleLog";
 
 export const getUser = async () => {
     try{
-        const answer = await api.get(USER_URL + "me/")
-        if(!answer){
+        const response = await api.get(USER_URL + "me/")
+        if(!response){
             throw new Error("Error while getting user")
         }
-        return answer
+        handleLog(response)
+        return response
     }
     catch(error){
         console.error(error)
@@ -28,11 +29,12 @@ export const putUser = async ({user_vk_id, height, weight}, id) =>  {
             height, 
             weight
         }
-        const answer = await api.put(USER_URL + `me/${id}/`, data)
-        if(!answer){
+        const response = await api.put(USER_URL + `me/${id}/`, data)
+        if(!response){
             throw new Error("Error while editing user")
         }
-        return answer
+        handleLog(response)
+        return response
     }
     catch(error){
         console.error(error)
@@ -52,11 +54,12 @@ export const registerUser = async ({user_vk_id, height, weight, username}) =>  {
             weight,
             username
         }
-        const answer = await api.post(USER_URL + `register/`, data)
-        if(!answer){
+        const response = await api.post(USER_URL + `register/`, data)
+        if(!response){
             throw new Error("Error while editing user")
         }
-        return answer
+        handleLog(response)
+        return response
     }
     catch(error){
         console.error(error)

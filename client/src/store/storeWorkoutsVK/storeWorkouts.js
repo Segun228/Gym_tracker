@@ -1,5 +1,5 @@
 import bridge from '@vkontakte/vk-bridge';
-import {SILENT_MODE} from "./../../../config.js"
+import {SILENT_MODE} from "../../../config.js"
 import handleLog from '../../helpers/handleLog.js';
 
 
