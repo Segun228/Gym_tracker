@@ -3,7 +3,7 @@ from users.models import AppUser
 import datetime
 
 class ExerciseTemplate(models.Model):
-    user_id = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='exercise_templates')
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='exercise_templates')
     name = models.CharField(max_length=100, null=False, blank=False, default="Exercise")
     muscle_group = models.CharField(max_length=100, default="Muscle")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -18,7 +18,7 @@ class ExerciseTemplate(models.Model):
 
 
 class Workout(models.Model):
-    user_id = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='workouts')
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='workouts')
     date = models.DateField(auto_now_add=True)
     note = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,8 +35,8 @@ def __str__(self):
 
 
 class WorkoutExercise(models.Model):
-    workout_id = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='workout_exercises')
-    template_id = models.ForeignKey(ExerciseTemplate, on_delete=models.CASCADE, related_name='workout_exercise')
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='workout_exercises')
+    template = models.ForeignKey(ExerciseTemplate, on_delete=models.CASCADE, related_name='workout_exercise')
     order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -46,11 +46,11 @@ class WorkoutExercise(models.Model):
         verbose_name_plural = 'упражнения'
 
     def __str__(self):
-        return f"Exercise from {self.workout_id}"
+        return f"{self.template.name} (Workout #{self.workout})"
 
 
 class Set(models.Model):
-    workout_exercise_id = models.ForeignKey(WorkoutExercise, on_delete=models.CASCADE, related_name='sets')
+    workout_exercise = models.ForeignKey(WorkoutExercise, on_delete=models.CASCADE, related_name='sets')
     weight = models.IntegerField(default=0)
     reps = models.IntegerField(default=0)
     duration = models.TimeField(default=datetime.time(0, 0), null=True, blank=True)

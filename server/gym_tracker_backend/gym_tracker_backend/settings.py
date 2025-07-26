@@ -30,8 +30,6 @@ INSTALLED_APPS = [
     "users",
     "rest_framework",
     "corsheaders",
-    'drf_spectacular',
-    'djoser',
     'rest_framework.authtoken',
 ]
 
