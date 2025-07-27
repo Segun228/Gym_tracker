@@ -1,123 +1,116 @@
-from rest_framework import mixins
-from rest_framework.viewsets import ViewSet
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.contrib.auth.models import User
-from rest_framework.serializers import ModelSerializer
-from rest_framework.permissions import AllowAny
-from .serializers import WorkoutSerializer, WorkoutExerciseSerializer, SetSerializer, ExerciseTemplateSerializer
-from .serializers import SetReadSerializer, WorkoutExerciseReadSerializer, WorkoutReadSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView, GenericAPIView
-from .models import Set, Workout, WorkoutExercise, ExerciseTemplate
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny
-from .models import Workout, WorkoutExercise, Set
-from .serializers import WorkoutSerializer, WorkoutExerciseSerializer, SetSerializer
-from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
+from rest_framework.generics import (
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView
+)
+from rest_framework.permissions import IsAuthenticated
+
+from .models import Workout, WorkoutExercise, Set, ExerciseTemplate
+from .serializers import (
+    WorkoutSerializer, WorkoutReadSerializer,
+    WorkoutExerciseSerializer, WorkoutExerciseReadSerializer,
+    SetSerializer, SetReadSerializer,
+    ExerciseTemplateSerializer
+)
 
 
+# ===== ExerciseTemplate Views =====
 
 class ListCreateTemplate(ListCreateAPIView):
     serializer_class = ExerciseTemplateSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = ExerciseTemplate.objects.all()
+    def perform_create(self, serializer):
+            serializer.save(user=self.request.user)
 
 
 class RetrieveUpdateDestroyTemplate(RetrieveUpdateDestroyAPIView):
     serializer_class = ExerciseTemplateSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    lookup_url_kwarg = "template_id"
     queryset = ExerciseTemplate.objects.all()
 
 
+# ===== Workout Views =====
 
-
-class WorkoutListView(ListAPIView):
-    serializer_class = WorkoutReadSerializer
-    permission_classes = [AllowAny]
+class WorkoutListCreateView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Workout.objects.filter(user_id=self.request.user)
-
-
-class WorkoutCreateView(CreateAPIView):
-    serializer_class = WorkoutSerializer
-    permission_classes = [AllowAny]
+        return Workout.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-
-class WorkoutRetrieveView(RetrieveAPIView):
-    serializer_class = WorkoutReadSerializer
-    permission_classes = [AllowAny]
-
-    def get_queryset(self):
-        return Workout.objects.filter(user_id=self.request.user)
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return WorkoutReadSerializer
+        return WorkoutSerializer
 
 
-class WorkoutUpdateDestroyView(DestroyAPIView, UpdateAPIView):
-    serializer_class = WorkoutSerializer
-    permission_classes = [AllowAny]
+class WorkoutRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    lookup_url_kwarg = "workout_id"
 
     def get_queryset(self):
-        return Workout.objects.filter(user_id=self.request.user)
+        return Workout.objects.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return WorkoutReadSerializer
+        return WorkoutSerializer
 
 
+# ===== WorkoutExercise Views =====
 
-
-
-
-class WorkoutExerciseListView(ListAPIView):
-    serializer_class = WorkoutExerciseReadSerializer
-    permission_classes = [AllowAny]
+class WorkoutExerciseListCreateView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return WorkoutExercise.objects.filter(workout_id=self.kwargs['workout_id'], workout_id__user_id=self.request.user)
-
-
-
-class WorkoutExerciseCreateView(CreateAPIView):
-    serializer_class = WorkoutExerciseSerializer
-    permission_classes = [AllowAny]
+        return WorkoutExercise.objects.filter(
+            workout_id=self.kwargs['workout_id'],
+            workout__user=self.request.user
+        )
 
     def perform_create(self, serializer):
-        workout = get_object_or_404(Workout, pk=self.kwargs['workout_id'], user=self.request.user)
+        workout = get_object_or_404(
+            Workout,
+            pk=self.kwargs['workout_id'],
+            user=self.request.user
+        )
         serializer.save(workout=workout)
 
-
-class WorkoutExerciseRetrieveView(RetrieveAPIView):
-    serializer_class = WorkoutExerciseReadSerializer
-    permission_classes = [AllowAny]
-
-    def get_queryset(self):
-        return WorkoutExercise.objects.filter(pk=self.kwargs['exercise_id'], workout_id__user_id=self.request.user)
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return WorkoutExerciseReadSerializer
+        return WorkoutExerciseSerializer
 
 
-class WorkoutExerciseUpdateDestroyView(UpdateAPIView, DestroyAPIView):
-    serializer_class = WorkoutExerciseSerializer
-    permission_classes = [AllowAny]
+class WorkoutExerciseRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    lookup_url_kwarg = "exercise_id"
 
     def get_queryset(self):
-        return WorkoutExercise.objects.filter(pk=self.kwargs['exercise_id'], workout_id__user_id=self.request.user)
+        return WorkoutExercise.objects.filter(
+            pk=self.kwargs['exercise_id'],
+            workout__user=self.request.user
+        )
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return WorkoutExerciseReadSerializer
+        return WorkoutExerciseSerializer
 
 
+# ===== Set Views =====
 
-
-
-
-class SetListView(ListAPIView):
-    serializer_class = SetReadSerializer
-    permission_classes = [AllowAny]
+class SetListCreateView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Set.objects.filter(workout_exercise_id=self.kwargs['exercise_id'], workout_exercise_id__workout_id__user_id=self.request.user)
-
-
-class SetCreateView(CreateAPIView):
-    serializer_class = SetSerializer
-    permission_classes = [AllowAny]
+        return Set.objects.filter(
+            workout_exercise_id=self.kwargs['exercise_id'],
+            workout_exercise_id__workout__user=self.request.user
+        )
 
     def perform_create(self, serializer):
         exercise = get_object_or_404(
@@ -125,20 +118,25 @@ class SetCreateView(CreateAPIView):
             pk=self.kwargs['exercise_id'],
             workout__user=self.request.user
         )
-        serializer.save(workout_exercise_id=exercise)
+        serializer.save(workout_exercise=exercise)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return SetReadSerializer
+        return SetSerializer
 
 
-class SetRetrieveView(RetrieveAPIView):
-    serializer_class = SetReadSerializer
-    permission_classes = [AllowAny]
-
-    def get_queryset(self):
-        return Set.objects.filter(pk=self.kwargs['set_id'], workout_exercise_id__workout_id__user_id=self.request.user)
-
-
-class SetUpdateDestroyView(UpdateAPIView, DestroyAPIView):
-    serializer_class = SetSerializer
-    permission_classes = [AllowAny]
+class SetRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    lookup_url_kwarg = "set_id"
 
     def get_queryset(self):
-        return Set.objects.filter(pk=self.kwargs['set_id'], workout_exercise_id__workout_id__user_id=self.request.user)
+        return Set.objects.filter(
+            pk=self.kwargs['set_id'],
+            workout_exercise_id__workout__user=self.request.user
+        )
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return SetReadSerializer
+        return SetSerializer

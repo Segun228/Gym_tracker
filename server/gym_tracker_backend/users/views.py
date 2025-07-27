@@ -8,8 +8,9 @@ from .serializers import AppUserSerializer
 from .handle_sign import handle_sign
 from django.http import HttpResponseForbidden
 from .models import AppUser
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.views import TokenRefreshView
+import logging
 
 
 class RegisterView(APIView):
@@ -23,31 +24,75 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+logger = logging.getLogger(__name__)
+
+
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        serializer = AppUserSerializer(data=request.data)
-        auth_header = request.headers.get('Authorization', "")
-        if not auth_header.startswith("VK "):
-            return HttpResponseForbidden("Missing VK header")
-        encoded_json = auth_header.replace("VK ", "")
+
+        auth_header = request.headers.get('Authorization', '')
+        if not auth_header.startswith('VK '):
+            logger.error('Missing or invalid VK authorization header')
+            return HttpResponseForbidden(
+                "Invalid authorization header format. Expected 'VK <base64_data>'",
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+
+        encoded_json = auth_header[3:]
+        print(encoded_json)
         vk_data = handle_sign(encoded_json)
+        
         if not vk_data:
-            return HttpResponseForbidden("invalid app vk_data")
-        else:
-            vk_user_id = vk_data.get("vk_user_id")
-            if not vk_user_id:
-                return HttpResponseForbidden("Missing vk_user_id")
-            user, created = AppUser.objects.get_or_create(vk_user_id=vk_user_id)
-            if created:
-                user.username = vk_data.get("vk_name") or ""
+            logger.error('VK signature verification failed')
+            return HttpResponseForbidden(
+                "Invalid VK signature or expired token",
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+
+        required_fields = ['vk_user_id', 'vk_ts', 'vk_app_id']
+        if not all(field in vk_data for field in required_fields):
+            logger.error(f'Missing required fields in VK data: {vk_data}')
+            return HttpResponseForbidden(
+                "Missing required authentication data",
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+
+        try:
+            user, created = AppUser.objects.get_or_create(
+                vk_user_id=vk_data['vk_user_id'],
+                defaults={
+                    'username': vk_data.get('vk_name', f"vk_user_{vk_data['vk_user_id']}"),
+                    'first_name': vk_data.get('vk_first_name', ''),
+                    'last_name': vk_data.get('vk_last_name', ''),
+                }
+            )
+            
+
+            if not created:
+                user.username = vk_data.get('vk_name', user.username)
                 user.save()
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                "access": str(refresh.access_token),
-                "refresh": str(refresh),
-            })
+
+        except Exception as e:
+            logger.error(f'User creation failed: {str(e)}')
+            return Response(
+                {"error": "User authentication failed"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        refresh = RefreshToken.for_user(user)
+        access = refresh.access_token
+
+        return Response({
+            "access": str(access),
+            "refresh": str(refresh),
+            "user_id": user.id,
+            "is_new_user": created
+        }, status=status.HTTP_200_OK)
 
 
 class RefreshView(TokenRefreshView):

@@ -3,9 +3,9 @@ import { useAdaptivity, useAppearance, useInsets } from '@vkontakte/vk-bridge-re
 import { AdaptivityProvider, ConfigProvider, AppRoot } from '@vkontakte/vkui';
 import { RouterProvider } from '@vkontakte/vk-mini-apps-router';
 import '@vkontakte/vkui/dist/vkui.css';
-import { transformVKBridgeAdaptivity } from './utils';
-import { router } from './routes';
-import { App } from './App';
+import { transformVKBridgeAdaptivity } from './utils/index.js';
+import { router } from './routes.js';
+import { App } from './App.jsx';
 
 
 import { Provider } from 'react-redux'
