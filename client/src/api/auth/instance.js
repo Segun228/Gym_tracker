@@ -1,6 +1,7 @@
 import axios from 'axios';
 import handleLog from "../../helpers/handleLog"
 import bridge from '@vkontakte/vk-bridge';
+import { USER_URL } from '../../../config';
 
 export const getParams = async () => {
     try{
@@ -19,7 +20,7 @@ export const getParams = async () => {
 
 
 export const instance = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_URL,
+    baseURL: USER_URL,
     headers: {
         'Content-Type': 'application/json',
     },
