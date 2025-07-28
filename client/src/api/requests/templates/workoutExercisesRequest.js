@@ -1,6 +1,6 @@
 import axios from "axios";
-import { USER_URL, API_URL } from "./../../../../config"
-import api from "./../../api"
+import { USER_URL, API_URL } from "../../../../config"
+import api from "../../api"
 import handleLog from "../../../helpers/handleLog";
 
 

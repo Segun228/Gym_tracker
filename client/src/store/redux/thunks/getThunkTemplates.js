@@ -1,0 +1,16 @@
+import {getWorkoutExercises} from "./../../../api/requests/templates/workoutExercisesRequest"
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+export const fetchTemplates = createAsyncThunk(
+    'templates/fetchAll',
+    async () => {
+        try {
+            const response = await getWorkoutExercises()
+            return response
+        } catch (error) {
+            console.error(error)
+            return rejectWithValue(error.response.data)
+        }
+    }
+);

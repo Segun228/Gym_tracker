@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {fetchWorkouts} from "./thunks/getThunkWorkouts"
+import { fetchTemplates } from "./thunks/getThunkTemplates";
+import { fetchMe } from "./thunks/getThunkMe";
 
 
 const mainSlice = createSlice({
     name: 'main',
     initialState: {
-        username: "",
-        vk_id: null,
+        username: null,
+        status: "idle",
+        error: null,
+        vk_user_id: null,
         height: 170,
         weight: 70,
         workouts: [
@@ -256,12 +261,76 @@ const mainSlice = createSlice({
                 }
             }
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchWorkouts.pending, (state) => {
+                state.status = 'loading'
+                state.error = null
+            })
+            .addCase(fetchWorkouts.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.workouts = action.payload
+            })
+            .addCase(fetchWorkouts.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.payload || action.error.message
+            })
+        
+        builder
+            .addCase(fetchTemplates.pending, (state) => {
+                state.status = 'loading'
+                state.error = null
+            })
+            .addCase(fetchTemplates.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.templates = action.payload
+            })
+            .addCase(fetchTemplates.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.payload || action.error.message
+            })
+
+        builder
+            .addCase(fetchMe.pending, (state) => {
+                state.status = 'loading'
+                state.error = null
+            })
+            .addCase(fetchMe.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.username = action.payload?.username
+                state.vk_user_id = action.payload?.vk_user_id
+                state.height = action.payload?.height || state.height
+                state.weight = action.payload?.weight || state.weight
+            })
+            .addCase(fetchMe.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.payload || action.error.message
+            })
     }
 }
 )
 
 export const { 
-
+    setUser,
+    deleteUser,
+    clearStorage,
+    setWorkouts,
+    addWorkout,
+    editWorkout,
+    deleteWorkout,
+    setTemplates,
+    addTemplate,
+    editTemplate,
+    deleteTemplate,
+    setExercises,
+    addExercise,
+    editExercise,
+    deleteExercise,
+    setSet,
+    addSet,
+    editSet,
+    deleteSet
 } = mainSlice.actions;
 
 export const mainReducer = mainSlice.reducer;
