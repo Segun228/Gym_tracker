@@ -2,7 +2,7 @@ import {getWorkoutExercises} from "./../../../api/requests/templates/workoutExer
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchTemplates = createAsyncThunk(
+export const getThunkTemplates = createAsyncThunk(
     'templates/fetchAll',
     async () => {
         try {

@@ -2,10 +2,10 @@ import {
     Panel,
 } from '@vkontakte/vkui';
 
-const ExactWorkoutPanel = () => {
+const ExactWorkoutPanel = ({ id }) => {
     return ( 
-    <Panel>
-
+    <Panel id={id}>
+        <div>exact workout</div>
     </Panel>);
 }
 

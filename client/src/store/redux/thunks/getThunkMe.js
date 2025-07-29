@@ -2,7 +2,7 @@ import {getMe} from "./../../../api/requests/user/userRequests"
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchMe = createAsyncThunk(
+export const getThunkMe = createAsyncThunk(
     'user/getMe',
     async () => {
         try {

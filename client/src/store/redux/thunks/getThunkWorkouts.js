@@ -2,7 +2,7 @@ import {getWorkouts} from "./../../../api/requests/workouts/workoutsRequest.js"
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchWorkouts = createAsyncThunk(
+export const getThunkWorkouts = createAsyncThunk(
     'workouts/fetchAll',
     async () => {
         try {

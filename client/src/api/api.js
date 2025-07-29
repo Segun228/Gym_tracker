@@ -1,10 +1,10 @@
 import axios from "axios"
 import { ACCESS_TOKEN } from "./../../config.js"
-import { BASE_URL } from "./../../config.js"
+import { MAIN_URL } from "./../../config.js"
 
 
 const api = axios.create({
-    baseURL: BASE_URL
+    baseURL: MAIN_URL
 })
 
 

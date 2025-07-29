@@ -2,10 +2,10 @@ import {
     Panel,
 } from '@vkontakte/vkui';
 
-const LoginPanel = () => {
+const LoginPanel = ({id}) => {
     return ( 
-    <Panel>
-
+    <Panel id ={id}>
+        <div>login</div>
     </Panel>);
 }
 

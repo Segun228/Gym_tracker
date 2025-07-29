@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {fetchWorkouts} from "./thunks/getThunkWorkouts"
-import { fetchTemplates } from "./thunks/getThunkTemplates";
-import { fetchMe } from "./thunks/getThunkMe";
-
-
+import {getThunkWorkouts} from "./thunks/getThunkWorkouts"
+import { getThunkTemplates } from "./thunks/getThunkTemplates";
+import { getThunkMe } from "./thunks/getThunkMe";
+import { workouts } from "./dummy/workouts";
+import { templates } from "./dummy/templates";
 const mainSlice = createSlice({
     name: 'main',
     initialState: {
@@ -13,107 +13,8 @@ const mainSlice = createSlice({
         vk_user_id: null,
         height: 170,
         weight: 70,
-        workouts: [
-            {
-                "id": 1,
-                "user_id": 42,
-                "date": "2025-07-20",
-                "note": "Upper body workout",
-                "duration": "01:10:00",
-                "callories_burnt": 450,
-                "workout_exercises": [
-                {
-                    "id": 101,
-                    "order": 1,
-                    "template": {
-                    "id": 1,
-                    "name": "Bench Press",
-                    "muscle_group": "Chest"
-                    },
-                    "sets": [
-                    { "id": 1001, "weight": 60, "reps": 10, "order": 1 },
-                    { "id": 1002, "weight": 65, "reps": 8, "order": 2 },
-                    { "id": 1003, "weight": 70, "reps": 6, "order": 3 }
-                    ]
-                },
-                {
-                    "id": 102,
-                    "order": 2,
-                    "template": {
-                    "id": 2,
-                    "name": "Pull Ups",
-                    "muscle_group": "Back"
-                    },
-                    "sets": [
-                    { "id": 1004, "weight": 0, "reps": 12, "order": 1 },
-                    { "id": 1005, "weight": 0, "reps": 10, "order": 2 }
-                    ]
-                }
-                ]
-            },
-            {
-                "id": 2,
-                "user_id": 42,
-                "date": "2025-07-22",
-                "note": "Leg day",
-                "duration": "01:00:00",
-                "callories_burnt": 520,
-                "workout_exercises": [
-                {
-                    "id": 103,
-                    "order": 1,
-                    "template": {
-                    "id": 3,
-                    "name": "Squats",
-                    "muscle_group": "Legs"
-                    },
-                    "sets": [
-                    { "id": 1006, "weight": 80, "reps": 10, "order": 1 },
-                    { "id": 1007, "weight": 85, "reps": 8, "order": 2 }
-                    ]
-                },
-                {
-                    "id": 104,
-                    "order": 2,
-                    "template": {
-                    "id": 4,
-                    "name": "Leg Curl",
-                    "muscle_group": "Hamstrings"
-                    },
-                    "sets": [
-                    { "id": 1008, "weight": 40, "reps": 12, "order": 1 },
-                    { "id": 1009, "weight": 45, "reps": 10, "order": 2 }
-                    ]
-                }
-                ]
-            }
-        ],
-        templates: [
-            {
-                "id": 1,
-                "user_id": 101,
-                "name": "Bench Press",
-                "muscle_group": "Chest",
-                "created_at": "2025-06-01T12:00:00Z",
-                "updated_at": "2025-06-10T10:00:00Z"
-            },
-            {
-                "id": 2,
-                "user_id": 101,
-                "name": "Deadlift",
-                "muscle_group": "Back",
-                "created_at": "2025-06-05T08:30:00Z",
-                "updated_at": "2025-06-15T09:00:00Z"
-            },
-            {
-                "id": 3,
-                "user_id": 101,
-                "name": "Squat",
-                "muscle_group": "Legs",
-                "created_at": "2025-06-10T14:00:00Z",
-                "updated_at": "2025-06-20T15:00:00Z"
-            }
-        ]
+        workouts: workouts,
+        templates: templates
     },
     reducers:{
         setUser(state, action){
@@ -264,46 +165,46 @@ const mainSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchWorkouts.pending, (state) => {
+            .addCase(getThunkWorkouts.pending, (state) => {
                 state.status = 'loading'
                 state.error = null
             })
-            .addCase(fetchWorkouts.fulfilled, (state, action) => {
+            .addCase(getThunkWorkouts.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.workouts = action.payload
             })
-            .addCase(fetchWorkouts.rejected, (state, action) => {
+            .addCase(getThunkWorkouts.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload || action.error.message
             })
         
         builder
-            .addCase(fetchTemplates.pending, (state) => {
+            .addCase(getThunkTemplates.pending, (state) => {
                 state.status = 'loading'
                 state.error = null
             })
-            .addCase(fetchTemplates.fulfilled, (state, action) => {
+            .addCase(getThunkTemplates.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.templates = action.payload
             })
-            .addCase(fetchTemplates.rejected, (state, action) => {
+            .addCase(getThunkTemplates.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload || action.error.message
             })
 
         builder
-            .addCase(fetchMe.pending, (state) => {
+            .addCase(getThunkMe.pending, (state) => {
                 state.status = 'loading'
                 state.error = null
             })
-            .addCase(fetchMe.fulfilled, (state, action) => {
+            .addCase(getThunkMe.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.username = action.payload?.username
                 state.vk_user_id = action.payload?.vk_user_id
                 state.height = action.payload?.height || state.height
                 state.weight = action.payload?.weight || state.weight
             })
-            .addCase(fetchMe.rejected, (state, action) => {
+            .addCase(getThunkMe.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload || action.error.message
             })

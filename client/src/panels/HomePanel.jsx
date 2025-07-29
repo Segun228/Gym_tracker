@@ -1,10 +1,12 @@
 import {
+    CardGrid,
     Panel,
 } from '@vkontakte/vkui';
+import WorkoutCard from '../components/workoutCard/WorkoutCard';
 
-const HomePanel = () => {
+const HomePanel = ({id}) => {
     return ( 
-    <Panel>
+    <Panel id={id}>
 
     </Panel>);
 }

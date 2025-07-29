@@ -1,9 +1,9 @@
 import axios from "axios";
-import {BASE_URL, USER_URL, API_URL} from "./../../../../config"
+import {MAIN_URL} from "./../../../../config"
 import api from "./../../api"
 import handleLog from "../../../helpers/handleLog";
 
-export const getUser = async () => {
+export const getMe = async () => {
     try{
         const response = await api.get(USER_URL + "me/")
         if(!response){
