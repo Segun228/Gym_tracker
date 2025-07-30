@@ -39,10 +39,10 @@ const WorkoutCard = ({ workout, onOpen }) => {
             <Text>Калорий сожжено: {countCalloriesBurnt(workout) || 0}</Text>
 
             <Spacing size={16} />
-            <Separator wide />
+            <Separator wide="true" />
             <Spacing size={12} />
 
-            <Button mode="tertiary" onClick={onOpen}>Подробнее...</Button>
+            <Button mode="tertiary" onClick={onOpen}>Изменить</Button>
         </Group>
         </Card>
     );

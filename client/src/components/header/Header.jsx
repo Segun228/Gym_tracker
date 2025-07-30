@@ -10,8 +10,15 @@ const Header = () => {
     }
     return (
         <>
-            <FixedLayout vertical="top">
-                <PanelHeader before={
+            <FixedLayout vertical="top" style={{
+                paddingBlock:20,
+            }}
+            >
+                <PanelHeader 
+                    style={{
+                        paddingBlock:20
+                    }}
+                    before={
                     <IconButton style={{ marginLeft: 16,}} hoverMode="none" activeMode="none" onClick={()=>handleClick()}>
                         <Icon12FireAlt style={{ width: 24, height: 24 }} />
                     </IconButton>

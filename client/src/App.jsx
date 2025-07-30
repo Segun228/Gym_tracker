@@ -56,7 +56,7 @@ const AppContent = () => {
     <SplitLayout>
       <SplitCol>
         <Header />
-        <div style={{paddingTop:56, paddingInline:10}}>
+        <div style={{paddingTop:56}}>
           <Epic tabbar={<BottomNav/>} activeStory={view}>
             <View id="home_view" activePanel={panel || 'home_panel'}>
               <HomePanel id="home_panel" />

@@ -1,6 +1,6 @@
 import {
     Icon28HomeOutline,
-    Icon28ServicesOutline,
+    Icon28CalendarAddOutline,
     Icon28UserCircleOutline,
     Icon24DumbbellsOutline
 } from '@vkontakte/icons';
@@ -33,7 +33,7 @@ export const BottomNav = () => {
                 text="Тренировки"
                 aria-label="Тренировки"
             >
-                <Icon28ServicesOutline />
+                <Icon28CalendarAddOutline />
             </TabbarItem>
 
             <TabbarItem

@@ -4,7 +4,10 @@ import {
     CardGrid,
     PanelHeader,
     PanelHeaderBack,
-    Header
+    Header,
+    FixedLayout,
+    Div,
+    Button,
 } from '@vkontakte/vkui';
 import WorkoutCard from '../components/workoutCard/WorkoutCard';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,16 +26,17 @@ const WorkoutsPanel = ({ id }) => {
     const workouts = useSelector(state => state.main?.workouts);
 
     return (
-        <Panel id={id}>
+        <Panel id={id} style={{paddingBottom:80}}>
             <Header before={<PanelHeaderBack onClick={() => routeNavigator.push("/")} />}>
                 Тренировки
             </Header>
             <div
             style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
                 gap: '16px',
                 padding: '16px',
+                paddingInline: 30
             }}
             >
                 {workouts && workouts.length > 0 ? (
@@ -43,6 +47,11 @@ const WorkoutsPanel = ({ id }) => {
                 <div>У вас пока нет ни одной тренировки(</div>
                 )}
             </div>
+            <FixedLayout filled vertical="bottom">
+                <Div>
+                    <Button size="l" stretched>Добавить тренировку</Button>
+                </Div>
+            </FixedLayout>
         </Panel>
     );
 };
