@@ -19,7 +19,7 @@ const Header = () => {
                         paddingBlock:20
                     }}
                     before={
-                    <IconButton style={{ marginLeft: 16,}} hoverMode="none" activeMode="none" onClick={()=>handleClick()}>
+                    <IconButton aria-label="go home" style={{ marginLeft: 16,}} hoverMode="none" activeMode="none" onClick={()=>handleClick()}>
                         <Icon12FireAlt style={{ width: 24, height: 24 }} />
                     </IconButton>
                 }>

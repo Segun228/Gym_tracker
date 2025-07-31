@@ -7,7 +7,9 @@ import {
     Header,
     Button,
     Div,
-    FixedLayout
+    FixedLayout,
+    Flex,
+    ButtonGroup,
 } from '@vkontakte/vkui';
 import WorkoutCard from '../components/workoutCard/WorkoutCard';
 import { useSelector, useDispatch } from 'react-redux';
@@ -49,9 +51,9 @@ const ExercisesPanel = ({ id }) => {
                 <div>У вас пока нет ни одного упражнения(</div>
                 )}
             </div>
-            <FixedLayout filled vertical="bottom">
-                <Div>
-                    <Button size="l" stretched>Добавить упражнение</Button>
+            <FixedLayout filled vertical="bottom" >
+                <Div stretched={true} >
+                    <Button stretched size='l'>Добавить упражнение</Button>
                 </Div>
             </FixedLayout>
         </Panel>

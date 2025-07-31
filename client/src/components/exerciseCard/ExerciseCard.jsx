@@ -9,17 +9,8 @@ import {
     Separator,
     Caption
 } from '@vkontakte/vkui';
-import TemplateDeletePopout from '../templateDeletePopout/TemplateDeletePopout';
-import { deleteWorkoutExercise as asyncDeleteTemplate } from '../../api/requests/templates/workoutExercisesRequest';
-import { deleteTemplate, deleteWorkout } from '../../store/redux/mainSlice';
 
-const TemplateCard = ({ template, onOpen }) => {
-    const handleDelete = async () => {
-        dispatch(deleteTemplate(template?.id))
-        await asyncDeleteWorkout(template?.id)
-    }
-    const date = new Date(template?.created_at);
-    const formatted = date.toLocaleDateString('ru-RU');
+const ExerciseCard = ({ workout_id, exercise, onOpen }) => {
     const routerNavigator = useRouteNavigator()
     return (
         <Card 
@@ -29,17 +20,19 @@ const TemplateCard = ({ template, onOpen }) => {
                 width: '100%',
                 maxWidth: 280,
                 margin: '0 auto',
+                cursor: "pointer"
             }}
+            onClick={()=>{routerNavigator.push(`/workouts/${workout_id}/exercises/${exercise?.id}`)}}
         >
         <Group mode="plain" style={{ padding: 0 }}>
             <Title level="3" weight="2" style={{ marginBottom: 8 }}>
-            {template?.name || "Упражнение"}
+            {exercise?.template?.name || "Упражнение"}
             </Title>
 
             <Spacing size={12} />
-            <Text>Мышечная группа: {template?.muscle_group}</Text>
+            <Text>Мышечная группа: {exercise?.template?.muscle_group}</Text>
             <Spacing size={8} />
-            <Caption>{"Cоздано "}{formatted || "Недавно"}</Caption>
+            <Caption>{"Сделано подходов "}{exercise?.sets.length || 0}</Caption>
             <Spacing size={12} />
 
             <Separator wide />
@@ -52,12 +45,12 @@ const TemplateCard = ({ template, onOpen }) => {
                     flexWrap:"wrap"
                 }}
             >
-                <Button size='l' onClick={onOpen}>Изменить</Button>
-                <TemplateDeletePopout template_id={template?.id} onDelete={()=>handleDelete(template?.id)}/>
+                <Button mode="tertiary" onClick={onOpen}>Изменить</Button>
+                <Button mode="tertiary" onClick={onOpen}>Удалить</Button>
             </div>
         </Group>
         </Card>
     );
 };
 
-export default TemplateCard;
+export default ExerciseCard;

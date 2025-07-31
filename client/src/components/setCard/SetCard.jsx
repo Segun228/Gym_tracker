@@ -1,0 +1,57 @@
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import {
+    Card,
+    Group,
+    Title,
+    Text,
+    Button,
+    Spacing,
+    Separator,
+    Caption
+} from '@vkontakte/vkui';
+
+const SetCard = ({ set, onOpen }) => {
+    const routerNavigator = useRouteNavigator()
+    return (
+        <Card 
+            mode="shadow" 
+            style={{
+                padding: 16,
+                width: '80%',
+                margin: '0 auto',
+            }}
+            onClick={()=>{routerNavigator.push(`/workouts/${workout_id}/sets/${set?.id}`)}}
+        >
+        <Group mode="plain" style={{ padding: 0 }}>
+            <Title level="3" weight="2" style={{ marginBottom: 8 }}>
+            {"Подход " + (set?.order || "")}
+            </Title>
+            <Spacing size={12} />
+            <Text>Рабочий вес: {set?.weight}</Text>
+            <Spacing size={12} />
+            <Text>Количество повторений: {set?.reps}</Text>
+            {set?.time && <>
+                <Spacing size={12} />
+                <Text>Время выполнения: {set?.time}</Text>
+            </>}
+            <Spacing size={12} />
+
+            <Separator wide />
+            <Spacing size={12} />
+            <div
+                style={{
+                    width:"100%",
+                    display:"flex",
+                    gap:20,
+                    flexWrap:"wrap"
+                }}
+            >
+                <Button mode="tertiary" onClick={onOpen}>Изменить</Button>
+                <Button mode="tertiary" onClick={onOpen}>Удалить</Button>
+            </div>
+        </Group>
+        </Card>
+    );
+};
+
+export default SetCard;

@@ -16,7 +16,7 @@ import { persistReducer } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-
+import { useState } from 'react';
 const persistConfig = {
   key: 'root',
   storage,
@@ -43,7 +43,7 @@ export const AppConfig = () => {
   const vkBridgeInsets = useInsets() || undefined;
   const adaptivity = transformVKBridgeAdaptivity(useAdaptivity());
   const { vk_platform } = parseURLSearchParamsForGetLaunchParams(window.location.search);
-
+  const [popout, setPopout] = useState(null);
   return (
     <Provider store = {store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -54,7 +54,7 @@ export const AppConfig = () => {
           hasCustomPanelHeaderAfter={true}
         >
           <AdaptivityProvider {...adaptivity}>
-            <AppRoot mode="full" safeAreaInsets={vkBridgeInsets}>
+            <AppRoot mode="full" safeAreaInsets={vkBridgeInsets} popout={popout}>
               <App />
             </AppRoot>
           </AdaptivityProvider>

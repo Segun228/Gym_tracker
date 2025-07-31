@@ -12,7 +12,6 @@ import {
   SplitCol, 
   Epic,
 } from '@vkontakte/vkui';
-
 import { router } from './routes';
 import HomePanel from './panels/HomePanel';
 import RegistrationPanel from './panels/RegistrationPanel';
@@ -34,7 +33,6 @@ import Header from "./components/header/Header";
 const AppContent = () => {
   const dispatch = useDispatch();
   const { view, panel } = useActiveVkuiLocation();
-
   useEffect(() => {
     handleLog("Trying to initialize bridge connection...");
     bridge.send('VKWebAppInit')
@@ -92,10 +90,13 @@ const AppContent = () => {
   );
 };
 
-export const App = () => (
-  <RouterProvider router={router}>
+export const App = () => {
+  const [popout, setPopout] = useState(null)
+  return(
+  <RouterProvider popout={popout} router={router}>
     <AppContent />
   </RouterProvider>
-);
+  )
+}
 
 export default App;

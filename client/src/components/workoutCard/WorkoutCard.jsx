@@ -6,12 +6,22 @@ import {
     Button,
     Spacing,
     Separator,
+    ButtonGroup,
 } from '@vkontakte/vkui';
 import countExercisesPerformed from '../../helpers/countExercisesPerformed';
 import countSetsPerformed from '../../helpers/countSetsPerformed';
 import countCalloriesBurnt from '../../helpers/countCalloriesBurnt';
-
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import WorkoutDeletePopout from '../workoutDeletePopout/WorkoutDeletePopout';
+import { deleteWorkout as asyncDeleteWorkout } from '../../api/requests/workouts/workoutsRequest';
+import { deleteWorkout } from '../../store/redux/mainSlice';
 const WorkoutCard = ({ workout, onOpen }) => {
+    const workout_id = workout?.id
+    const handleDelete = async () => {
+        dispatch(deleteWorkout(workout_id))
+        await asyncDeleteWorkout(workout_id)
+    }
+    const routerNavigator = useRouteNavigator()
     return (
         <Card 
             mode="shadow" 
@@ -20,7 +30,9 @@ const WorkoutCard = ({ workout, onOpen }) => {
                 width: '100%',
                 maxWidth: 280,
                 margin: '0 auto',
+                cursor:"pointer"
             }}
+            onClick={()=>{routerNavigator.push(`/workouts/${workout?.id}`)}}
         >
         <Group mode="plain" style={{ padding: 0 }}>
             <div style={{ marginBottom: 12 }}>
@@ -41,8 +53,19 @@ const WorkoutCard = ({ workout, onOpen }) => {
             <Spacing size={16} />
             <Separator wide="true" />
             <Spacing size={12} />
-
-            <Button mode="tertiary" onClick={onOpen}>Изменить</Button>
+            <div
+                style={{
+                    width:"100%",
+                    display:"flex",
+                    gap:20,
+                    flexWrap:"wrap"
+                }}
+            >
+                <ButtonGroup onClick={(e)=>{e.stopPropagation()}}>
+                    <Button size="l" onClick={onOpen}>Изменить</Button>
+                    <WorkoutDeletePopout workout_id={workout?.id} onDelete={()=>{handleDelete(workout_id)}}/>
+                </ButtonGroup>
+            </div>
         </Group>
         </Card>
     );

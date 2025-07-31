@@ -27,7 +27,7 @@ const WorkoutsPanel = ({ id }) => {
 
     return (
         <Panel id={id} style={{paddingBottom:80}}>
-            <Header before={<PanelHeaderBack onClick={() => routeNavigator.push("/")} />}>
+            <Header onClick={() => routeNavigator.push("/")} before={<PanelHeaderBack />}>
                 Тренировки
             </Header>
             <div

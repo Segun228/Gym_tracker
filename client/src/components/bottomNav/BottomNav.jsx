@@ -19,7 +19,7 @@ export const BottomNav = () => {
     return (
         <Tabbar>
             <TabbarItem
-                onClick={() => routeNavigator.push('/')}
+                onClick={() => routeNavigator.replace('/')}
                 selected={view === 'home_view'}
                 text="Главная"
                 aria-label="Главная"
@@ -28,7 +28,7 @@ export const BottomNav = () => {
             </TabbarItem>
 
             <TabbarItem
-                onClick={() => routeNavigator.push('/workouts')}
+                onClick={() => routeNavigator.replace('/workouts')}
                 selected={view === 'workouts_view'}
                 text="Тренировки"
                 aria-label="Тренировки"
@@ -37,7 +37,7 @@ export const BottomNav = () => {
             </TabbarItem>
 
             <TabbarItem
-                onClick={() => routeNavigator.push('/exercises')}
+                onClick={() => routeNavigator.replace('/exercises')}
                 selected={view === 'exercises_view'}
                 text="Упражнения"
                 aria-label="Упражнения"
