@@ -9,9 +9,9 @@ import {
     Separator,
     Caption
 } from '@vkontakte/vkui';
-import TemplateDeletePopout from '../templateDeletePopout/TemplateDeletePopout';
-import { deleteWorkoutExercise as asyncDeleteTemplate } from '../../api/requests/templates/workoutExercisesRequest';
-import { deleteTemplate, deleteWorkout } from '../../store/redux/mainSlice';
+import TemplateDeletePopout from '../../popouts/templateDeletePopout/TemplateDeletePopout';
+import { deleteWorkoutExercise as asyncDeleteTemplate } from '../../../api/requests/templates/workoutExercisesRequest';
+import { deleteTemplate, deleteWorkout } from '../../../store/redux/mainSlice';
 
 const TemplateCard = ({ template, onOpen }) => {
     const handleDelete = async () => {

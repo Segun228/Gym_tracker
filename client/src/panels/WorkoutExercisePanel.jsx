@@ -6,15 +6,16 @@ import {
     Div,
     Button,
     Flex,
-    ButtonGroup
+    ButtonGroup,
+    PanelHeader
 } from '@vkontakte/vkui';
-import SetCard from '../components/setCard/SetCard';
+import SetCard from '../components/cards/setCard/SetCard';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import { useSelector } from 'react-redux';
-import WorkoutDeletePopout from '../components/workoutDeletePopout/WorkoutDeletePopout';
+import WorkoutDeletePopout from '../components/popouts/workoutDeletePopout/WorkoutDeletePopout';
 import { deleteWorkout as asyncDeleteWorkout } from '../api/requests/workouts/workoutsRequest';
 import { deleteWorkout } from '../store/redux/mainSlice';
-import ExerciseDeletePopout from '../components/exerciseDeletePopout/ExerciseDeletePopout';
+import ExerciseDeletePopout from '../components/popouts/exerciseDeletePopout/ExerciseDeletePopout';
 const WorkoutExercisePanel = ({id}) => {
     const routerNavigator = useRouteNavigator()
     const params = useParams()
@@ -28,9 +29,9 @@ const WorkoutExercisePanel = ({id}) => {
     }
     return ( 
         <Panel id={id} style={{paddingBottom:80}}>
-            <Header onClick={() => routerNavigator.back()} before={<PanelHeaderBack />}>
+            <PanelHeader before={<PanelHeaderBack onClick={() => routerNavigator.back()} style={{cursor:"pointer"}}/>}>
                 {exercise?.template?.name}
-            </Header>
+            </PanelHeader>
             <Flex
                 direction='column'
                 align='center'
@@ -38,7 +39,8 @@ const WorkoutExercisePanel = ({id}) => {
                     gap: '20px',
                     padding: '20px',
                     paddingInline: 30,
-                    paddingRight: 30
+                    paddingRight: 30,
+                    marginTop: 50,
                 }}
             >
                 {sets && sets.length > 0 ? (

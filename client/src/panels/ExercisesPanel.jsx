@@ -11,12 +11,12 @@ import {
     Flex,
     ButtonGroup,
 } from '@vkontakte/vkui';
-import WorkoutCard from '../components/workoutCard/WorkoutCard';
+import WorkoutCard from '../components/cards/workoutCard/WorkoutCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getThunkWorkouts } from '../store/redux/thunks/getThunkWorkouts';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import TemplateCard from '../components/templateCard/TemplateCard';
+import TemplateCard from '../components/cards/templateCard/TemplateCard';
 import { getThunkTemplates } from '../store/redux/thunks/getThunkTemplates';
 
 const ExercisesPanel = ({ id }) => {
@@ -31,16 +31,18 @@ const ExercisesPanel = ({ id }) => {
 
     return (
         <Panel id={id} style={{paddingBottom:80}}>
-            <Header before={<PanelHeaderBack onClick={() => routeNavigator.push("/")} style={{cursor:"pointer"}}/>}>
-                Мои упражнения
-            </Header>
+            <PanelHeader before={<PanelHeaderBack onClick={() => routeNavigator.push("/")} style={{cursor:"pointer"}}/>}>
+                    Мои упражнения
+            </PanelHeader>
             <div
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                 gap: '16px',
                 padding: '16px',
-                paddingInline: 30
+                paddingInline: 30,
+                marginTop:50
+
             }}
             >
                 {templates && templates.length > 0 ? (

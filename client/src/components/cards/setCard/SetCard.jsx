@@ -9,9 +9,9 @@ import {
     Separator,
     Caption
 } from '@vkontakte/vkui';
-import { deleteSet as asyncDeleteSet } from '../../api/requests/sets/setsRequests';
-import { deleteSet } from '../../store/redux/mainSlice';
-import SetDeletePopout from '../setDeletePopout/setDeletePopout';
+import { deleteSet as asyncDeleteSet } from '../../../api/requests/sets/setsRequests';
+import { deleteSet } from '../../../store/redux/mainSlice';
+import SetDeletePopout from '../../popouts/setDeletePopout/setDeletePopout';
 
 const SetCard = ({ set, onOpen }) => {
     const params = useParams()

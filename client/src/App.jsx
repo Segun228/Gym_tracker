@@ -27,8 +27,8 @@ import { useDispatch } from "react-redux";
 import { getThunkMe } from "./store/redux/thunks/getThunkMe";
 import { getThunkWorkouts } from "./store/redux/thunks/getThunkWorkouts";
 import { getThunkTemplates } from "./store/redux/thunks/getThunkTemplates";
-import {BottomNav} from "./components/bottomNav/BottomNav"
-import Header from "./components/header/Header";
+import {BottomNav} from "./components/structure/bottomNav/BottomNav"
+import Header from "./components/structure/header/Header";
 
 const AppContent = () => {
   const dispatch = useDispatch();
@@ -51,10 +51,9 @@ const AppContent = () => {
 
 
   return (
-    <SplitLayout>
+    <SplitLayout header={<Header />}>
       <SplitCol>
-        <Header />
-        <div style={{paddingTop:56}}>
+        <div style={{paddingTop:0}}>
           <Epic tabbar={<BottomNav/>} activeStory={view}>
             <View id="home_view" activePanel={panel || 'home_panel'}>
               <HomePanel id="home_panel" />

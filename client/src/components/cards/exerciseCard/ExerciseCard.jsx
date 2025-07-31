@@ -10,10 +10,10 @@ import {
     Caption
 } from '@vkontakte/vkui';
 import { useDispatch } from 'react-redux';
-import { deleteExercise } from '../../store/redux/mainSlice';
-import { deleteExercise as asyncDeleteExercise } from '../../api/requests/exercises/exercisesRequests';
-import WorkoutDeletePopout from '../workoutDeletePopout/WorkoutDeletePopout';
-import ExerciseDeletePopout from '../exerciseDeletePopout/ExerciseDeletePopout';
+import { deleteExercise } from '../../../store/redux/mainSlice';
+import { deleteExercise as asyncDeleteExercise } from '../../../api/requests/exercises/exercisesRequests';
+import WorkoutDeletePopout from '../../popouts/workoutDeletePopout/WorkoutDeletePopout';
+import ExerciseDeletePopout from '../../popouts/exerciseDeletePopout/ExerciseDeletePopout';
 const ExerciseCard = ({ workout_id, exercise, onOpen }) => {
     const dispatch = useDispatch()
     const routerNavigator = useRouteNavigator()

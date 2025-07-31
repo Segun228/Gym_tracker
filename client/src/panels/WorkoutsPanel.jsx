@@ -9,7 +9,7 @@ import {
     Div,
     Button,
 } from '@vkontakte/vkui';
-import WorkoutCard from '../components/workoutCard/WorkoutCard';
+import WorkoutCard from '../components/cards/workoutCard/WorkoutCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getThunkWorkouts } from '../store/redux/thunks/getThunkWorkouts';
@@ -27,16 +27,17 @@ const WorkoutsPanel = ({ id }) => {
 
     return (
         <Panel id={id} style={{paddingBottom:80}}>
-            <Header onClick={() => routeNavigator.push("/")} before={<PanelHeaderBack />}>
+            <PanelHeader before={<PanelHeaderBack onClick={() => routeNavigator.push("/")} style={{cursor:"pointer"}}/>}>
                 Тренировки
-            </Header>
+            </PanelHeader>
             <div
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
                 gap: '16px',
                 padding: '16px',
-                paddingInline: 30
+                paddingInline: 30,
+                marginTop: 50
             }}
             >
                 {workouts && workouts.length > 0 ? (

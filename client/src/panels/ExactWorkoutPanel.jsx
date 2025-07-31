@@ -1,6 +1,7 @@
 import {
     ButtonGroup,
     Panel,
+    PanelHeader,
 } from '@vkontakte/vkui';
 import { useParams } from '@vkontakte/vk-mini-apps-router';
 import { uid } from 'uid';
@@ -11,11 +12,11 @@ import {
     Div,
     Button,
 } from '@vkontakte/vkui';
-import WorkoutCard from '../components/workoutCard/WorkoutCard';
+import WorkoutCard from '../components/cards/workoutCard/WorkoutCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import ExerciseCard from '../components/exerciseCard/ExerciseCard';
-import WorkoutDeletePopout from '../components/workoutDeletePopout/WorkoutDeletePopout';
+import ExerciseCard from '../components/cards/exerciseCard/ExerciseCard';
+import WorkoutDeletePopout from '../components/popouts/workoutDeletePopout/WorkoutDeletePopout';
 import { deleteWorkout as asyncDeleteWorkout } from '../api/requests/workouts/workoutsRequest';
 import { deleteWorkout } from '../store/redux/mainSlice';
 const ExactWorkoutPanel = ({ id }) => {
@@ -31,16 +32,17 @@ const ExactWorkoutPanel = ({ id }) => {
     }
     return (
         <Panel id={id} style={{paddingBottom:80}}>
-            <Header onClick={() => routeNavigator.push("/workouts")} before={<PanelHeaderBack />}>
+            <PanelHeader before={<PanelHeaderBack onClick={() => routeNavigator.back()} style={{cursor:"pointer"}}/>}>
                 {workout?.note}
-            </Header>
+            </PanelHeader>
             <div
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
                 gap: '16px',
                 padding: '16px',
-                paddingInline: 30
+                paddingInline: 30,
+                marginTop: 50,
             }}
             >
                 {exercises && exercises.length > 0 ? (

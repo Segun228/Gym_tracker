@@ -8,13 +8,13 @@ import {
     Separator,
     ButtonGroup,
 } from '@vkontakte/vkui';
-import countExercisesPerformed from '../../helpers/countExercisesPerformed';
-import countSetsPerformed from '../../helpers/countSetsPerformed';
-import countCalloriesBurnt from '../../helpers/countCalloriesBurnt';
+import countExercisesPerformed from '../../../helpers/countExercisesPerformed';
+import countSetsPerformed from '../../../helpers/countSetsPerformed';
+import countCalloriesBurnt from '../../../helpers/countCalloriesBurnt';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import WorkoutDeletePopout from '../workoutDeletePopout/WorkoutDeletePopout';
-import { deleteWorkout as asyncDeleteWorkout } from '../../api/requests/workouts/workoutsRequest';
-import { deleteWorkout } from '../../store/redux/mainSlice';
+import WorkoutDeletePopout from '../../popouts/workoutDeletePopout/WorkoutDeletePopout';
+import { deleteWorkout as asyncDeleteWorkout } from '../../../api/requests/workouts/workoutsRequest';
+import { deleteWorkout } from '../../../store/redux/mainSlice';
 const WorkoutCard = ({ workout, onOpen }) => {
     const workout_id = workout?.id
     const handleDelete = async () => {
