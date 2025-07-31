@@ -11,6 +11,10 @@ import {
 import SetCard from '../components/setCard/SetCard';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import { useSelector } from 'react-redux';
+import WorkoutDeletePopout from '../components/workoutDeletePopout/WorkoutDeletePopout';
+import { deleteWorkout as asyncDeleteWorkout } from '../api/requests/workouts/workoutsRequest';
+import { deleteWorkout } from '../store/redux/mainSlice';
+import ExerciseDeletePopout from '../components/exerciseDeletePopout/ExerciseDeletePopout';
 const WorkoutExercisePanel = ({id}) => {
     const routerNavigator = useRouteNavigator()
     const params = useParams()
@@ -18,6 +22,10 @@ const WorkoutExercisePanel = ({id}) => {
     const workout = useSelector(state => state.main?.workouts.find(workout => workout?.id == workout_id))
     const exercise = workout?.workout_exercises.find(exercise => exercise?.id == exercise_id)
     const sets = exercise?.sets
+    const handleDelete = async () => {
+        dispatch(deleteWorkout(workout_id))
+        await asyncDeleteWorkout(workout_id)
+    }
     return ( 
         <Panel id={id} style={{paddingBottom:80}}>
             <Header onClick={() => routerNavigator.back()} before={<PanelHeaderBack />}>
@@ -44,7 +52,7 @@ const WorkoutExercisePanel = ({id}) => {
             <FixedLayout filled vertical="bottom" >
                 <ButtonGroup stretched={true}>
                     <Button stretched size='l'>Добавить выполненный подход</Button>
-                    <Button size='l'>Удалить</Button>
+                    <ExerciseDeletePopout workout_id={workout_id} exercise_id={exercise?.id} onDelete={handleDelete} mode="outline"/>
                 </ButtonGroup>
             </FixedLayout>
         </Panel>

@@ -54,7 +54,7 @@ const ExactWorkoutPanel = ({ id }) => {
             <FixedLayout filled vertical="bottom" >
                 <ButtonGroup stretched={true}>
                     <Button stretched size='l'>Добавить выполненное упражнение</Button>
-                    <WorkoutDeletePopout workout_id={workout_id} onDelete={()=>{handleDelete()}}/>
+                    <WorkoutDeletePopout mode="outline" workout_id={workout_id} onDelete={()=>{handleDelete()}}/>
                 </ButtonGroup>
             </FixedLayout>
         </Panel>

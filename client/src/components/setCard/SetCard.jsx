@@ -1,4 +1,4 @@
-import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import {
     Card,
     Group,
@@ -9,10 +9,26 @@ import {
     Separator,
     Caption
 } from '@vkontakte/vkui';
+import { deleteSet as asyncDeleteSet } from '../../api/requests/sets/setsRequests';
+import { deleteSet } from '../../store/redux/mainSlice';
+import SetDeletePopout from '../setDeletePopout/setDeletePopout';
 
 const SetCard = ({ set, onOpen }) => {
+    const params = useParams()
     const routerNavigator = useRouteNavigator()
-    return (
+    const handleDelete = async () => {
+        dispatch(deleteSet({
+            workoutId: params?.workout_id,
+            exerciseId: params?.exercise_id,
+            setId: set?.id
+        }))
+        await asyncDeleteSet({
+            workout_id: params?.workout_id,
+            exercise_id: params?.exercise_id,
+            set_id: set?.id
+        })
+    }
+    return(
         <Card 
             mode="shadow" 
             style={{
@@ -46,8 +62,8 @@ const SetCard = ({ set, onOpen }) => {
                     flexWrap:"wrap"
                 }}
             >
-                <Button mode="tertiary" onClick={onOpen}>Изменить</Button>
-                <Button mode="tertiary" onClick={onOpen}>Удалить</Button>
+                <Button mode="primary" onClick={onOpen}>Изменить</Button>
+                <SetDeletePopout onDelete={handleDelete} mode="secondary"/>
             </div>
         </Group>
         </Card>

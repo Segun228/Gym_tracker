@@ -53,7 +53,7 @@ const TemplateCard = ({ template, onOpen }) => {
                 }}
             >
                 <Button size='l' onClick={onOpen}>Изменить</Button>
-                <TemplateDeletePopout template_id={template?.id} onDelete={()=>handleDelete(template?.id)}/>
+                <TemplateDeletePopout mode="secondary" template_id={template?.id} onDelete={()=>handleDelete(template?.id)}/>
             </div>
         </Group>
         </Card>

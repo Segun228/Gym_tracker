@@ -4,7 +4,7 @@ import {
     Button
 } from '@vkontakte/vkui';
 import { usePopout } from '@vkontakte/vk-mini-apps-router';
-const WorkoutDeletePopout = ({ workout_id, onDelete, mode }) => {
+const SetDeletePopout = ({ onDelete, mode }) => {
     const [popout, setPopout] = useState(null)
     const handleDelete = () => {
         setPopout(
@@ -17,8 +17,8 @@ const WorkoutDeletePopout = ({ workout_id, onDelete, mode }) => {
                     onDelete()
                 },}
             ]}
-            title="Удаление тренировки"
-            description="Вы уверены, что хотите удалить эту тренировку?"
+            title="Удаление подхода"
+            description="Вы уверены, что хотите удалить этот подход?"
             />
         );
     };
@@ -26,11 +26,11 @@ const WorkoutDeletePopout = ({ workout_id, onDelete, mode }) => {
     return (
         <>
         {popout}
-        <Button size='l' mode={mode} onClick={()=>{handleDelete()}}>
+        <Button mode={mode} size='l' onClick={()=>{handleDelete()}}>
             Удалить
         </Button>
         </>
     );
 };
 
-export default WorkoutDeletePopout
+export default SetDeletePopout

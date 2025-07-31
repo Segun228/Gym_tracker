@@ -4,7 +4,7 @@ import {
     Button
 } from '@vkontakte/vkui';
 import { usePopout } from '@vkontakte/vk-mini-apps-router';
-const TemplateDeletePopout = ({ template_id, onDelete }) => {
+const TemplateDeletePopout = ({ template_id, onDelete, mode }) => {
     const [popout, setPopout] = useState(null)
     const handleDelete = () => {
         setPopout(
@@ -14,7 +14,7 @@ const TemplateDeletePopout = ({ template_id, onDelete }) => {
                 { title: 'Отмена',autoclose: true, mode: 'cancel',  },
                 {title: 'Удалить', autoclose: true, mode: 'destructive',
                 action: () => {
-                    onDelete(template_id)
+                    onDelete()
                 },}
             ]}
             title="Удаление упражнения"
@@ -26,7 +26,7 @@ const TemplateDeletePopout = ({ template_id, onDelete }) => {
     return (
         <>
         {popout}
-        <Button size='l' onClick={()=>{handleDelete()}}>
+        <Button size='l' mode={mode} onClick={()=>{handleDelete()}}>
             Удалить
         </Button>
         </>

@@ -9,9 +9,18 @@ import {
     Separator,
     Caption
 } from '@vkontakte/vkui';
-
+import { useDispatch } from 'react-redux';
+import { deleteExercise } from '../../store/redux/mainSlice';
+import { deleteExercise as asyncDeleteExercise } from '../../api/requests/exercises/exercisesRequests';
+import WorkoutDeletePopout from '../workoutDeletePopout/WorkoutDeletePopout';
+import ExerciseDeletePopout from '../exerciseDeletePopout/ExerciseDeletePopout';
 const ExerciseCard = ({ workout_id, exercise, onOpen }) => {
+    const dispatch = useDispatch()
     const routerNavigator = useRouteNavigator()
+    const handleDelete = async () => {
+        dispatch(deleteExercise({workoutId : workout_id, exerciseId : exercise?.id}))
+        await asyncDeleteExercise({workout_id, exercise_id : exercise?.id})
+    }
     return (
         <Card 
             mode="shadow" 
@@ -44,9 +53,14 @@ const ExerciseCard = ({ workout_id, exercise, onOpen }) => {
                     gap:20,
                     flexWrap:"wrap"
                 }}
+                onClick = {
+                    (e)=>{
+                        e.stopPropagation()
+                    }
+                }
             >
-                <Button mode="tertiary" onClick={onOpen}>Изменить</Button>
-                <Button mode="tertiary" onClick={onOpen}>Удалить</Button>
+                <Button mode="primary" onClick={onOpen}>Изменить</Button>
+                <ExerciseDeletePopout mode="secondary" workout_id={workout_id} exercise_id={exercise?.id} onDelete={handleDelete}/>
             </div>
         </Group>
         </Card>
