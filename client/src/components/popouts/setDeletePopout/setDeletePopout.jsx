@@ -9,6 +9,7 @@ const SetDeletePopout = ({ onDelete, mode }) => {
     const handleDelete = () => {
         setPopout(
             <Alert
+            onClose={()=>setPopout(null)}
             dismissLabel="Отмена"
             actions={[
                 { title: 'Отмена',autoclose: true, mode: 'cancel',  },

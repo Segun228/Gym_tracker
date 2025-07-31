@@ -11,21 +11,23 @@ import {
 } from '@vkontakte/vkui';
 import SetCard from '../components/cards/setCard/SetCard';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import WorkoutDeletePopout from '../components/popouts/workoutDeletePopout/WorkoutDeletePopout';
-import { deleteWorkout as asyncDeleteWorkout } from '../api/requests/workouts/workoutsRequest';
-import { deleteWorkout } from '../store/redux/mainSlice';
+import { deleteExercise as asyncDeleteExercise } from '../api/requests/exercises/exercisesRequests';
+import { deleteExercise, deleteWorkout } from '../store/redux/mainSlice';
 import ExerciseDeletePopout from '../components/popouts/exerciseDeletePopout/ExerciseDeletePopout';
 const WorkoutExercisePanel = ({id}) => {
     const routerNavigator = useRouteNavigator()
+    const dispatch = useDispatch()
     const params = useParams()
     const {workout_id, exercise_id} = params
     const workout = useSelector(state => state.main?.workouts.find(workout => workout?.id == workout_id))
     const exercise = workout?.workout_exercises.find(exercise => exercise?.id == exercise_id)
     const sets = exercise?.sets
     const handleDelete = async () => {
-        dispatch(deleteWorkout(workout_id))
-        await asyncDeleteWorkout(workout_id)
+        dispatch(deleteExercise({workoutId:workout_id, exerciseId: exercise?.id}))
+        routerNavigator.back()
+        await asyncDeleteExercise({workout_id, exercise_id})
     }
     return ( 
         <Panel id={id} style={{paddingBottom:80}}>

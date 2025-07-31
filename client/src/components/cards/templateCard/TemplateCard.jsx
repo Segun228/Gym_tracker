@@ -12,11 +12,13 @@ import {
 import TemplateDeletePopout from '../../popouts/templateDeletePopout/TemplateDeletePopout';
 import { deleteWorkoutExercise as asyncDeleteTemplate } from '../../../api/requests/templates/workoutExercisesRequest';
 import { deleteTemplate, deleteWorkout } from '../../../store/redux/mainSlice';
+import { useDispatch } from 'react-redux';
 
 const TemplateCard = ({ template, onOpen }) => {
+    const dispatch = useDispatch()
     const handleDelete = async () => {
-        dispatch(deleteTemplate(template?.id))
-        await asyncDeleteWorkout(template?.id)
+        dispatch(deleteTemplate({templateId: template?.id}))
+        await asyncDeleteTemplate({id: template?.id})
     }
     const date = new Date(template?.created_at);
     const formatted = date.toLocaleDateString('ru-RU');

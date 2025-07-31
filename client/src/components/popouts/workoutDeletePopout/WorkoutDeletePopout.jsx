@@ -10,9 +10,13 @@ const WorkoutDeletePopout = ({ workout_id, onDelete, mode }) => {
         setPopout(
             <Alert
             dismissLabel="Отмена"
+            onClose={()=>setPopout(null)}
             actions={[
-                { title: 'Отмена',autoclose: true, mode: 'cancel',  },
-                {title: 'Удалить', autoclose: true, mode: 'destructive',
+                { title: 'Отмена',
+                    autoclose:"true", 
+                    mode: 'cancel',  
+                },
+                {title: 'Удалить', autoclose:"true", mode: 'destructive',
                 action: () => {
                     onDelete()
                 },}

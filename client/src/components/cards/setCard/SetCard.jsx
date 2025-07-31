@@ -12,8 +12,11 @@ import {
 import { deleteSet as asyncDeleteSet } from '../../../api/requests/sets/setsRequests';
 import { deleteSet } from '../../../store/redux/mainSlice';
 import SetDeletePopout from '../../popouts/setDeletePopout/setDeletePopout';
+import { useDispatch } from 'react-redux';
+import handleLog from '../../../helpers/handleLog';
 
 const SetCard = ({ set, onOpen }) => {
+    const dispatch = useDispatch()
     const params = useParams()
     const routerNavigator = useRouteNavigator()
     const handleDelete = async () => {
@@ -22,6 +25,11 @@ const SetCard = ({ set, onOpen }) => {
             exerciseId: params?.exercise_id,
             setId: set?.id
         }))
+        handleLog({
+            workout_id: params?.workout_id,
+            exercise_id: params?.exercise_id,
+            set_id: set?.id
+        })
         await asyncDeleteSet({
             workout_id: params?.workout_id,
             exercise_id: params?.exercise_id,
@@ -36,7 +44,6 @@ const SetCard = ({ set, onOpen }) => {
                 width: '80%',
                 margin: '0 auto',
             }}
-            onClick={()=>{routerNavigator.push(`/workouts/${workout_id}/sets/${set?.id}`)}}
         >
         <Group mode="plain" style={{ padding: 0 }}>
             <Title level="3" weight="2" style={{ marginBottom: 8 }}>

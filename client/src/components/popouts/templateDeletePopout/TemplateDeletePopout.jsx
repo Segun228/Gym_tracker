@@ -9,10 +9,11 @@ const TemplateDeletePopout = ({ template_id, onDelete, mode }) => {
     const handleDelete = () => {
         setPopout(
             <Alert
+            onClose={()=>setPopout(null)}
             dismissLabel="Отмена"
             actions={[
-                { title: 'Отмена',autoclose: true, mode: 'cancel',  },
-                {title: 'Удалить', autoclose: true, mode: 'destructive',
+                { title: 'Отмена',autoclose: "true", mode: 'cancel',  },
+                {title: 'Удалить', autoclose: "true", mode: 'destructive',
                 action: () => {
                     onDelete()
                 },}

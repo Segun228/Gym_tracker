@@ -15,10 +15,12 @@ import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import WorkoutDeletePopout from '../../popouts/workoutDeletePopout/WorkoutDeletePopout';
 import { deleteWorkout as asyncDeleteWorkout } from '../../../api/requests/workouts/workoutsRequest';
 import { deleteWorkout } from '../../../store/redux/mainSlice';
+import { useDispatch } from 'react-redux';
 const WorkoutCard = ({ workout, onOpen }) => {
+    const dispatch = useDispatch()
     const workout_id = workout?.id
     const handleDelete = async () => {
-        dispatch(deleteWorkout(workout_id))
+        dispatch(deleteWorkout({id:workout_id}))
         await asyncDeleteWorkout(workout_id)
     }
     const routerNavigator = useRouteNavigator()

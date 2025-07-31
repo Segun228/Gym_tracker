@@ -19,6 +19,7 @@ import ExerciseCard from '../components/cards/exerciseCard/ExerciseCard';
 import WorkoutDeletePopout from '../components/popouts/workoutDeletePopout/WorkoutDeletePopout';
 import { deleteWorkout as asyncDeleteWorkout } from '../api/requests/workouts/workoutsRequest';
 import { deleteWorkout } from '../store/redux/mainSlice';
+import handleLog from '../helpers/handleLog';
 const ExactWorkoutPanel = ({ id }) => {
     const params = useParams()
     const workout_id = params?.workout_id
@@ -27,7 +28,9 @@ const ExactWorkoutPanel = ({ id }) => {
     const routeNavigator = useRouteNavigator();
     const exercises = workout?.workout_exercises
     const handleDelete = async () => {
-        dispatch(deleteWorkout(workout_id))
+        handleLog("Deleting workout in component", workout_id)
+        dispatch(deleteWorkout({id:workout_id}))
+        routeNavigator.push("/workouts")
         await asyncDeleteWorkout(workout_id)
     }
     return (

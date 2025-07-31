@@ -3,6 +3,7 @@ import { API_URL } from "../../../../config"
 import handleLog from "../../../helpers/handleLog"
 
 const validateFields = (...fields) => {
+    handleLog("Validating:", fields)
     if (fields.some(f => f === undefined || f === null || (typeof f === "string" && !f.trim()))) {
         throw new Error("Missing or invalid fields")
     }
@@ -62,7 +63,7 @@ export const putSet = async ({ weight, reps, duration, order }, workout_id, exer
     }
 }
 
-export const deleteSet = async (workout_id, exercise_id, set_id) => {
+export const deleteSet = async ({workout_id, exercise_id, set_id}) => {
     try {
         validateFields(workout_id, exercise_id, set_id)
         const response = await api.delete(`${API_URL}workouts/${workout_id}/exercises/${exercise_id}/sets/${set_id}/`)
