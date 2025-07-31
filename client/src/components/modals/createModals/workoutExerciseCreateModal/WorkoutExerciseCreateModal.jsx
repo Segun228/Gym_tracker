@@ -12,30 +12,30 @@ import {
 } from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import SelectList from '../../../atoms/SelectList';
 
-const SetCreateModal = ({ id, onCreateSet }) => {
+const WorkoutExerciseCreateModal = ({ id, onCreateSet }) => {
     const routerNavigator = useRouteNavigator();
 
     const closeModal = () => {
-        routerNavigator.push("/exercises")
-    };
+        routerNavigator.push("/workout")
+    }
 
-    const [weight, setWeight] = useState(0)
-    const [reps, setReps] = useState(0)
-    const [duration, setDuration] = useState('00:00:00')
+    const [template, setTemplate] = useState("")
+
 
     const handleSubmit = useCallback(() => {
-        if (!note.trim()) {
+        if (!template.trim()) {
         alert('Заполните необходимые поля');
         return;
         }
 
         if (onCreateSet) {
-        onCreateSet({ note });
+        onCreateSet({ template });
         }
 
         closeModal();
-    }, [weight, reps, duration, onCreateSet, closeModal]);
+    }, [template, onCreateSet, closeModal]);
 
     return (
         <ModalPage
@@ -50,7 +50,7 @@ const SetCreateModal = ({ id, onCreateSet }) => {
                 </PanelHeaderButton>
             }
             >
-            Новый подход
+            Новое упражнение
             </ModalPageHeader>
         }
         >
@@ -58,27 +58,15 @@ const SetCreateModal = ({ id, onCreateSet }) => {
             <Spacing size={24} />
             <FormItem top="Рабочий вес" >
                 <Input
-                    value={weight}
+                    value={template}
                     onChange={(e) => setWeight(e.target.value)}
-                    placeholder="С каким весом делал?"
                 />
+                <SelectList setTemplate={setTemplate} template={template}/>
             </FormItem>
             <Spacing size={20} />
-            <FormItem top="Количество повторений">
-                <Input
-                    value={reps}
-                    onChange={(e) => setReps(e.target.value)}
-                    placeholder="Сколько раз ты пожал свои 30?"
-                />
-            </FormItem>
-            <Spacing size={20} />
-            <FormItem top="Время выполнения" >
-                <Input
-                    value={duration}
-                    onChange={(e) => setDuration(e.target.value)}
-                    type='time'
-                />
-            </FormItem>
+            <Button size="l" stretched onClick={()=>routerNavigator.push("/exercises/modal")} appearance="accent">
+                Новое упражнение
+            </Button>
             <Spacing size={20} />
             <FormItem>
             <Button size="l" stretched onClick={handleSubmit} appearance="accent">
@@ -91,4 +79,4 @@ const SetCreateModal = ({ id, onCreateSet }) => {
     );
 };
 
-export default SetCreateModal;
+export default WorkoutExerciseCreateModal;

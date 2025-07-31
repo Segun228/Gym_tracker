@@ -1,68 +1,77 @@
 import React, { useState, useCallback } from 'react';
-import { ModalPage, ModalPageHeader, PanelHeaderButton, Group, FormLayoutGroup, Input, Textarea, Button } from '@vkontakte/vkui';
+import {
+    ModalPage,
+    ModalPageHeader,
+    PanelHeaderButton,
+    Group,
+    FormItem,
+    Input,
+    Textarea,
+    Button,
+    Spacing,
+} from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-const WorkoutCreateModal = ({ id, onModalClose, onCreateWorkout }) => {
-    const routerNavigator = useRouteNavigator()
-    const closeModal = ()=>{
-        routerNavigator.closeModal()
-    }
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+
+const WorkoutCreateModal = ({ id, onCreateWorkout }) => {
+    const routerNavigator = useRouteNavigator();
+
+    const closeModal = () => {
+        routerNavigator.back()
+    };
+
+    const [note, setNote] = useState('');
+
 
     const handleSubmit = useCallback(() => {
-        if (!title.trim()) {
-            alert('Введите название тренировки');
-            return;
+        if (!note.trim()) {
+        alert('Введите название тренировки');
+        return;
         }
 
         if (onCreateWorkout) {
-            onCreateWorkout({ title, description });
+        onCreateWorkout({ note });
         }
 
         closeModal();
-    }, [title, description, onCreateWorkout, closeModal]);
-
-
-    if (!closeModal) {
-        console.error("WorkoutCreateModal: closeModal function is not available. Ensure `useModalContext` is used within RouterProvider or `onModalClose` prop is provided.");
-        return null;
-    }
+    }, [note, onCreateWorkout, closeModal]);
 
     return (
         <ModalPage
-            id={id}
-            header={
-                <ModalPageHeader
-                    before={
-                        <PanelHeaderButton onClick={closeModal}>
-                            <Icon24Cancel />
-                        </PanelHeaderButton>
-                    }
-                >
-                    Новая тренировка
-                </ModalPageHeader>
+        id={id}
+        settlingHeight={80}
+        dynamicContentHeight
+        header={
+            <ModalPageHeader
+            before={
+                <PanelHeaderButton onClick={()=>closeModal()}>
+                <Icon24Cancel />
+                </PanelHeaderButton>
             }
-
+            >
+            Новая тренировка
+            </ModalPageHeader>
+        }
         >
-            <Group>
-                <FormLayoutGroup mode="vertical">
-                    <Input
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="Название тренировки"
-                        required
-                    />
-                    <Textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Описание (необязательно)"
-                    />
-                    <Button size="l" stretched onClick={handleSubmit}>
-                        Создать
-                    </Button>
-                </FormLayoutGroup>
-            </Group>
+        <Group>
+            <Spacing size={24} />
+            <FormItem top="Название тренировки" bottom="Обязательно">
+            <Textarea
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Например спина, кардио, или не дай бог день ног"
+            />
+            </FormItem>
+
+            <Spacing size={24} />
+
+            <FormItem>
+            <Button size="l" stretched onClick={handleSubmit} appearance="accent">
+                Создать тренировку
+            </Button>
+            </FormItem>
+            <Spacing size={12} />
+        </Group>
         </ModalPage>
     );
 };
