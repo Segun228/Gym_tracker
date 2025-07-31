@@ -29,6 +29,7 @@ import { getThunkWorkouts } from "./store/redux/thunks/getThunkWorkouts";
 import { getThunkTemplates } from "./store/redux/thunks/getThunkTemplates";
 import {BottomNav} from "./components/structure/bottomNav/BottomNav"
 import Header from "./components/structure/header/Header";
+import { ModalRouter } from "./components/structure/modalRouter/ModalRouter";
 
 const AppContent = () => {
   const dispatch = useDispatch();
@@ -51,41 +52,44 @@ const AppContent = () => {
 
 
   return (
-    <SplitLayout header={<Header />}>
-      <SplitCol>
-        <div style={{paddingTop:0}}>
-          <Epic tabbar={<BottomNav/>} activeStory={view}>
-            <View id="home_view" activePanel={panel || 'home_panel'}>
-              <HomePanel id="home_panel" />
-            </View>
+    <>
+      <SplitLayout header={<Header />}>
+        <SplitCol>
+          <ModalRouter />
+          <div style={{paddingTop:0}}>
+            <Epic tabbar={<BottomNav/>} activeStory={view}>
+              <View id="home_view" activePanel={panel || 'home_panel'}>
+                <HomePanel id="home_panel" />
+              </View>
 
-            <View id="registration_view" activePanel={panel || "registration_panel"}>
-              <RegistrationPanel id="registration_panel" />
-            </View>
+              <View id="registration_view" activePanel={panel || "registration_panel"}>
+                <RegistrationPanel id="registration_panel" />
+              </View>
 
-            <View id="login_view" activePanel={panel || "login_panel"}>
-              <LoginPanel id="login_panel" />
-            </View>
+              <View id="login_view" activePanel={panel || "login_panel"}>
+                <LoginPanel id="login_panel" />
+              </View>
 
-            <View id="exercises_view" activePanel={panel || "exercises_panel"}>
-              <ExercisesPanel id="exercises_panel" />
-            </View>
+              <View id="exercises_view" activePanel={panel || "exercises_panel"}>
+                <ExercisesPanel id="exercises_panel" />
+              </View>
 
-            <View id="workouts_view" activePanel={panel || "workouts_panel"}>
-              <WorkoutsPanel id="workouts_panel" />
-            </View>
+              <View id="workouts_view" activePanel={panel || "workouts_panel"}>
+                <WorkoutsPanel id="workouts_panel" />
+              </View>
 
-            <View id="exact_workout_view" activePanel={panel || "exact_workout_panel"}>
-              <ExactWorkoutPanel id="exact_workout_panel" />
-            </View>
+              <View id="exact_workout_view" activePanel={panel || "exact_workout_panel"}>
+                <ExactWorkoutPanel id="exact_workout_panel" />
+              </View>
 
-            <View id="exact_exercise_view" activePanel={panel || "exact_exercise_panel"}>
-              <WorkoutExercisePanel id="exact_exercise_panel" />
-            </View>
-          </Epic>
-        </div>
-      </SplitCol>
-    </SplitLayout>
+              <View id="exact_exercise_view" activePanel={panel || "exact_exercise_panel"}>
+                <WorkoutExercisePanel id="exact_exercise_panel" />
+              </View>
+            </Epic>
+          </div>
+        </SplitCol>
+      </SplitLayout>
+    </>
   );
 };
 
