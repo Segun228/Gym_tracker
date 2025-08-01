@@ -10,10 +10,6 @@ const Header = () => {
     }
     return (
         <>
-            <FixedLayout vertical="top" style={{
-                paddingBlock:20,
-            }}
-            >
                 <PanelHeader 
                     style={{
                         paddingBlock:20
@@ -25,7 +21,6 @@ const Header = () => {
                 }>
                     <span style={{cursor:"pointer"}} onClick={()=>handleClick()}>Gym Tracker</span>
                 </PanelHeader>
-            </FixedLayout>
         </>
     );
 };

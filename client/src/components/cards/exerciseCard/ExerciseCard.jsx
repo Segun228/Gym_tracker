@@ -59,7 +59,7 @@ const ExerciseCard = ({ workout_id, exercise, onOpen }) => {
                     }
                 }
             >
-                <Button mode="primary" onClick={onOpen}>Изменить</Button>
+                <Button mode="primary" onClick={()=>routerNavigator.push(`updateModal/${exercise?.id}`)}>Изменить</Button>
                 <ExerciseDeletePopout mode="secondary" workout_id={workout_id} exercise_id={exercise?.id} onDelete={handleDelete}/>
             </div>
         </Group>

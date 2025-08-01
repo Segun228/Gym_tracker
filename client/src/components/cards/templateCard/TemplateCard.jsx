@@ -54,7 +54,7 @@ const TemplateCard = ({ template, onOpen }) => {
                     flexWrap:"wrap"
                 }}
             >
-                <Button size='l' onClick={onOpen}>Изменить</Button>
+                <Button size='l' onClick={()=>routerNavigator.push(`updateModal/${template?.id}`)}>Изменить</Button>
                 <TemplateDeletePopout mode="secondary" template_id={template?.id} onDelete={()=>handleDelete(template?.id)}/>
             </div>
         </Group>

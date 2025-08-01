@@ -26,10 +26,10 @@ const TemplateCreateModal = ({ id, onCreateWorkout }) => {
 
     const handleSubmit = useCallback(() => {
         if (!name.trim()) {
-        alert('Введите название шаблона тренировки');
+        alert('Введите название шаблона упражнения');
         return;
         }
-
+        // TODO: Здесь должна быть логика обновления
         if (onCreateWorkout) {
         onCreateWorkout({ name, muscle_group });
         }
@@ -50,7 +50,7 @@ const TemplateCreateModal = ({ id, onCreateWorkout }) => {
                 </PanelHeaderButton>
             }
             >
-            Новый шаблон тренировки
+            Новый шаблон упражнения
             </ModalPageHeader>
         }
         >

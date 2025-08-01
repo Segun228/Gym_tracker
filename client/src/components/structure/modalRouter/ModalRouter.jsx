@@ -6,7 +6,7 @@ import ExerciseUpdateModal from '../../modals/updateModals/templateUpdateModal/T
 import WorkoutCreateModal from '../../modals/createModals/workoutCreateModal/WorkoutCreateModal.jsx';
 import WorkoutUpdateModal from '../../modals/updateModals/WorkoutUpdateModal/WorkoutUpdateModal.jsx';
 
-import WorkoutExerciseCreateModal from '../../modals/createModals/workoutExerciseCreateModal/WorkoutExerciseCreateModal.jsx';
+import WorkoutExerciseCreateModal from '../../modals/createModals/workoutExerciseCreateModal/ExerciseCreateModal.jsx';
 import WorkoutExerciseUpdateModal from '../../modals/updateModals/exerciseUpdateModal/ExerciseUpdateModal.jsx';
 
 import SetCreateModal from '../../modals/createModals/setCreateModal/SetCreateModal.jsx';

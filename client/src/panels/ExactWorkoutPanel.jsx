@@ -35,7 +35,7 @@ const ExactWorkoutPanel = ({ id }) => {
     }
     return (
         <Panel id={id} style={{paddingBottom:80}}>
-            <PanelHeader before={<PanelHeaderBack onClick={() => routeNavigator.back()} style={{cursor:"pointer"}}/>}>
+            <PanelHeader before={<PanelHeaderBack onClick={() => routeNavigator.push("/workouts")} style={{cursor:"pointer"}}/>}>
                 {workout?.note}
             </PanelHeader>
             <div
@@ -58,7 +58,7 @@ const ExactWorkoutPanel = ({ id }) => {
             </div>
             <FixedLayout filled vertical="bottom" >
                 <ButtonGroup stretched={true}>
-                    <Button stretched size='l'>Добавить выполненное упражнение</Button>
+                    <Button onClick={()=>{routeNavigator.push("modal")}} stretched size='l'>Добавить выполненное упражнение</Button>
                     <WorkoutDeletePopout mode="outline" workout_id={workout_id} onDelete={()=>{handleDelete()}}/>
                 </ButtonGroup>
             </FixedLayout>

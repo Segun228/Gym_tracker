@@ -69,7 +69,7 @@ const SetCard = ({ set, onOpen }) => {
                     flexWrap:"wrap"
                 }}
             >
-                <Button mode="primary" onClick={onOpen}>Изменить</Button>
+                <Button mode="primary" onClick={()=>routerNavigator.push(`updateModal/${set?.id}`)}>Изменить</Button>
                 <SetDeletePopout onDelete={handleDelete} mode="secondary"/>
             </div>
         </Group>

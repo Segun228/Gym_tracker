@@ -56,16 +56,16 @@ export const DEFAULT_MODALS = {
 
 
 export const exerciseCreateModalRoute = createModal(DEFAULT_MODALS.EXERCISE_CREATE, '/exercises/modal');
-export const exerciseUpdateModalRoute = createModal(DEFAULT_MODALS.EXERCISE_UPDATE, '/exercises/:updating_template_id/modal', ['updating_template_id']);
+export const exerciseUpdateModalRoute = createModal(DEFAULT_MODALS.EXERCISE_UPDATE, '/exercises/updateModal/:updating_template_id', ['updating_template_id']);
 
 export const workoutCreateModalRoute = createModal(DEFAULT_MODALS.WORKOUT_CREATE, '/workouts/modal');
-export const workoutUpdateModalRoute = createModal(DEFAULT_MODALS.WORKOUT_UPDATE, '/workouts/:updating_workout_id/modal', ['updating_workout_id']);
+export const workoutUpdateModalRoute = createModal(DEFAULT_MODALS.WORKOUT_UPDATE, '/workouts/updateModal/:updating_workout_id', ['updating_workout_id']);
 
 export const workoutExerciseCreateModalRoute = createModal(DEFAULT_MODALS.WORKOUT_EXERCISE_CREATE, '/workouts/:workout_id/modal', ['workout_id']);
-export const workoutExerciseUpdateModalRoute = createModal(DEFAULT_MODALS.WORKOUT_EXERCISE_UPDATE, '/workouts/:workout_id/modal/:updating_exercise_id', ['workout_id', 'updating_exercise_id']);
+export const workoutExerciseUpdateModalRoute = createModal(DEFAULT_MODALS.WORKOUT_EXERCISE_UPDATE, '/workouts/:workout_id/updateModal/:updating_exercise_id', ['workout_id', 'updating_exercise_id']);
 
 export const setCreateModalRoute = createModal(DEFAULT_MODALS.SET_CREATE, '/workouts/:workout_id/exercises/:exercise_id/modal', ['workout_id', 'exercise_id']);
-export const setUpdateModalRoute = createModal(DEFAULT_MODALS.SET_UPDATE, '/workouts/:workout_id/exercises/:exercise_id/modal/:updating_set_id', ['workout_id', 'exercise_id', 'updating_set_id']);
+export const setUpdateModalRoute = createModal(DEFAULT_MODALS.SET_UPDATE, '/workouts/:workout_id/exercises/:exercise_id/updateModal/:updating_set_id', ['workout_id', 'exercise_id', 'updating_set_id']);
 
 
 export const routes = RoutesConfig.create([

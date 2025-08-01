@@ -64,7 +64,7 @@ const WorkoutCard = ({ workout, onOpen }) => {
                 }}
             >
                 <ButtonGroup onClick={(e)=>{e.stopPropagation()}}>
-                    <Button size="l" onClick={onOpen}>Изменить</Button>
+                    <Button size="l" onClick={()=>routerNavigator.push(`updateModal/${workout_id}`)}>Изменить</Button>
                     <WorkoutDeletePopout mode="secondary" workout_id={workout?.id} onDelete={()=>{handleDelete(workout_id)}}/>
                 </ButtonGroup>
             </div>

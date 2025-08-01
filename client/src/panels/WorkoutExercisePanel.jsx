@@ -31,7 +31,7 @@ const WorkoutExercisePanel = ({id}) => {
     }
     return ( 
         <Panel id={id} style={{paddingBottom:80}}>
-            <PanelHeader before={<PanelHeaderBack onClick={() => routerNavigator.back()} style={{cursor:"pointer"}}/>}>
+            <PanelHeader before={<PanelHeaderBack onClick={() => routerNavigator.push(`/workouts/${workout_id}`)} style={{cursor:"pointer"}}/>}>
                 {exercise?.template?.name}
             </PanelHeader>
             <Flex

@@ -1,65 +1,46 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
     ModalPage,
     ModalPageHeader,
     PanelHeaderButton,
     Group,
     FormItem,
+    Input,
+    Textarea,
     Button,
     Spacing,
 } from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import SelectList from '../../../atoms/SelectList';
-import { useSelector } from 'react-redux';
-import handleLog from '../../../../helpers/handleLog';
 
-const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
-    const params = useParams();
-    handleLog("url params", params);
-    
-
-    const workout_id = params?.workout_id;
-    const exercise_id = params?.updating_exercise_id;
-    
-
-    const workout = useSelector(state => state?.main?.workouts.find(workout => workout?.id == workout_id));
-    const exercise = workout?.workout_exercises.find(ex => ex?.id == exercise_id);
-    handleLog("current exercise", exercise);
-
+const WorkoutExerciseCreateModal = ({ id, onCreateWorkoutExercise }) => {
+    const params = useParams()
+    const workout_id = params?.workout_id
     const routerNavigator = useRouteNavigator();
-
     const closeModal = () => {
         if(workout_id){
             routerNavigator.push(`/workouts/${workout_id}`);
-        } else {
+        }
+        else{
             routerNavigator.push(`/workouts`);
         }
     };
 
-
-    const [template, setTemplate] = useState('');
-
-    useEffect(() => {
-        if (exercise) {
-            setTemplate(String(exercise.template?.id || ''));
-        }
-    }, [exercise]);
+    const [template, setTemplate] = useState("");
 
     const handleSubmit = useCallback(() => {
-
-        if (!template) {
-            console.error('Необходимо выбрать шаблон упражнения');
+        if (!template.trim()) {
+            alert('Необходимо выбрать шаблон упражнения');
             return;
         }
-        
         // TODO: Здесь должна быть логика обновления
-        if (onUpdateWorkoutExercise) {
-            onUpdateWorkoutExercise({ template });
+        if (onCreateWorkoutExercise) {
+            onCreateWorkoutExercise({ template });
         }
-        
+
         closeModal();
-    }, [template, onUpdateWorkoutExercise, closeModal]);
+    }, [template, onCreateWorkoutExercise, closeModal]);
 
     return (
         <ModalPage
@@ -74,12 +55,13 @@ const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
                         </PanelHeaderButton>
                     }
                 >
-                    Изменение упражнения
+                    Новое упражнение
                 </ModalPageHeader>
             }
         >
             <Group>
                 <Spacing size={24} />
+                {/* Компонент для выбора шаблона упражнения */}
                 <FormItem top="Шаблон упражнения" >
                     <SelectList setTemplate={setTemplate} template={template}/>
                 </FormItem>
@@ -104,9 +86,9 @@ const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
                         stretched 
                         onClick={handleSubmit} 
                         appearance="accent"
-                        disabled={!template}
+                        disabled={!template.trim()} 
                     >
-                        Изменить упражнение
+                        Добавить упражнение
                     </Button>
                 </FormItem>
                 <Spacing size={12} />
@@ -115,4 +97,4 @@ const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
     );
 };
 
-export default WorkoutExerciseUpdateModal;
+export default WorkoutExerciseCreateModal;

@@ -55,7 +55,7 @@ const ExercisesPanel = ({ id }) => {
             </div>
             <FixedLayout filled vertical="bottom" >
                 <Div stretched={true} >
-                    <Button stretched size='l'>Добавить упражнение</Button>
+                    <Button onClick={()=>{routeNavigator.push("modal")}} stretched size='l'>Добавить упражнение</Button>
                 </Div>
             </FixedLayout>
         </Panel>

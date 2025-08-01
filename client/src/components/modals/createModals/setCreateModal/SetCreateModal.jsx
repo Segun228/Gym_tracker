@@ -29,7 +29,7 @@ const SetCreateModal = ({ id, onCreateSet }) => {
         alert('Заполните необходимые поля');
         return;
         }
-
+        // TODO: Здесь должна быть логика обновления
         if (onCreateSet) {
         onCreateSet({ note });
         }
