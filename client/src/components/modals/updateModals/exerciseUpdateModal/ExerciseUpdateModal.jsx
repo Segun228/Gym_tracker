@@ -11,9 +11,11 @@ import {
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import SelectList from '../../../atoms/SelectList';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import handleLog from '../../../../helpers/handleLog';
 import Warning from '../../../popouts/warning/Warning';
+import { putExercise } from '../../../../api/requests/exercises/exercisesRequests';
+import { editExercise } from '../../../../store/redux/mainSlice';
 
 const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
     const params = useParams();
@@ -45,19 +47,15 @@ const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
             setTemplate(String(exercise?.template?.id || ''));
         }
     }, [exercise]);
-
-    const handleSubmit = useCallback(() => {
+    const dispatch = useDispatch()
+    const handleSubmit = useCallback(async () => {
 
         if (!template) {
             console.error('Необходимо выбрать шаблон упражнения');
             return;
         }
-        
-        // TODO: Здесь должна быть логика обновления
-        if (onUpdateWorkoutExercise) {
-            onUpdateWorkoutExercise({ template });
-        }
-        
+        const new_exercise = await putExercise({ template_id:template, workout_id, exercise_id})
+        dispatch(editExercise({ workoutId:workout_id, exercise:new_exercise }))
         closeModal();
         window.location.reload()
     }, [template, onUpdateWorkoutExercise, closeModal]);

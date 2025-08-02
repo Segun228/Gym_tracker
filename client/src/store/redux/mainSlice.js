@@ -158,12 +158,12 @@ const mainSlice = createSlice({
         },
 
         editSet(state, action) {
-            const { workoutId, exerciseId, set } = action.payload;
+            const { workoutId, exerciseId, set_id, set } = action.payload;
             const workout = state.workouts.find(w => w.id == workoutId);
             if (workout) {
                 const exercise = workout.workout_exercises.find(e => e.id == exerciseId);
                 if (exercise) {
-                    const index = exercise.sets.findIndex(s => s.id == set.id);
+                    const index = exercise.sets?.findIndex(s => s.id == set_id);
                     if (index != -1) {
                         exercise.sets[index] = set;
                     }

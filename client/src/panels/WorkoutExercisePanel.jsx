@@ -7,7 +7,8 @@ import {
     Button,
     Flex,
     ButtonGroup,
-    PanelHeader
+    PanelHeader,
+    Spinner
 } from '@vkontakte/vkui';
 import SetCard from '../components/cards/setCard/SetCard';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
@@ -26,7 +27,7 @@ const WorkoutExercisePanel = ({id}) => {
     const sets = exercise?.sets
     const handleDelete = async () => {
         dispatch(deleteExercise({workoutId:workout_id, exerciseId: exercise?.id}))
-        routerNavigator.back()
+        routerNavigator.push(`/workouts/${workout_id}/`)
         await asyncDeleteExercise({workout_id, exercise_id})
     }
     return ( 
@@ -65,7 +66,7 @@ const WorkoutExercisePanel = ({id}) => {
             </Flex>
             <FixedLayout filled vertical="bottom" >
                 <ButtonGroup stretched={true}>
-                    <Button stretched size='l'>Добавить выполненный подход</Button>
+                    <Button onClick={()=>routerNavigator.push("modal")} stretched size='l'>Добавить выполненный подход</Button>
                     <ExerciseDeletePopout workout_id={workout_id} exercise_id={exercise?.id} onDelete={handleDelete} mode="outline"/>
                 </ButtonGroup>
             </FixedLayout>

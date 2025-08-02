@@ -35,7 +35,7 @@ export const getSet = async (workout_id, exercise_id, set_id) => {
     }
 }
 
-export const postSet = async ({ weight, reps, duration, order }, workout_id, exercise_id) => {
+export const postSet = async ({ weight, reps, duration, order, workout_id, exercise_id }) => {
     try {
         validateFields(workout_id, exercise_id)
         const data = { weight, reps, duration, order }
@@ -49,7 +49,7 @@ export const postSet = async ({ weight, reps, duration, order }, workout_id, exe
     }
 }
 
-export const putSet = async ({ weight, reps, duration, order }, workout_id, exercise_id, set_id) => {
+export const putSet = async ({ weight, reps, duration, order, workout_id, exercise_id, set_id }) => {
     try {
         validateFields(workout_id, exercise_id, set_id)
         const data = { weight, reps, duration, order }

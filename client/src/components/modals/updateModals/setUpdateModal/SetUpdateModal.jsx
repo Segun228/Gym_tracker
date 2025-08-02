@@ -11,8 +11,10 @@ import {
 } from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Warning from '../../../popouts/warning/Warning';
+import { postSet, putSet } from '../../../../api/requests/sets/setsRequests';
+import { addSet, editSet } from '../../../../store/redux/mainSlice';
 
 const SetUpdateModal = ({ id, onUpdateSet }) => {
     const routerNavigator = useRouteNavigator();
@@ -21,7 +23,7 @@ const SetUpdateModal = ({ id, onUpdateSet }) => {
     const workout = useSelector(state => state.main?.workouts?.find(workout => workout?.id == workout_id));
     const exercise = workout?.workout_exercises?.find(exercise => exercise?.id == exercise_id);
     const set = exercise?.sets?.find(set => set?.id == updating_set_id);
-
+    const set_id = set?.id
     const [warningActive, setWarningActive] = useState(false)
 
     const [weight, setWeight] = useState(0);
@@ -45,17 +47,14 @@ const SetUpdateModal = ({ id, onUpdateSet }) => {
             routerNavigator.push("/workouts");
         }
     };
-
-    const handleSubmit = useCallback(() => {
+    const dispatch = useDispatch()
+    const handleSubmit = useCallback(async () => {
         if (!weight && !reps && !duration) {
-            alert('Заполните необходимые поля');
-            return;
+        setWarningActive('Заполните необходимые поля')
+        return;
         }
-
-        // TODO: Здесь должна быть логика обновления
-        if (onUpdateSet) {
-            onUpdateSet({ weight, reps, duration });
-        }
+        const new_set = await putSet({weight, reps, duration, workout_id, exercise_id, set_id})
+        dispatch(editSet({ workoutId:workout_id, exerciseId:exercise_id, new_set, set_id }))
 
         closeModal();
         window.location.reload()

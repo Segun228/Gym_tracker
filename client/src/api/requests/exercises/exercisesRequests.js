@@ -50,10 +50,10 @@ export const postExercise = async ({ template_id, order, workout_id}) => {
     }
 }
 
-export const putExercise = async ({ template_id, order }, workout_id, exercise_id) => {
+export const putExercise = async ({ template_id, order, workout_id, exercise_id}) => {
     try {
-        validateFields(workout_id, exercise_id, template_id, order)
-        const data = { template_id, order }
+        validateFields(workout_id, exercise_id, template_id)
+        const data = { template:template_id, order }
         const response = await api.put(`${API_URL}workouts/${workout_id}/exercises/${exercise_id}/`, data)
         handleLog(response)
         return response

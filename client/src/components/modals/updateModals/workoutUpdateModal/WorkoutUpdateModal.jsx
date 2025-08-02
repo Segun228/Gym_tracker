@@ -24,7 +24,7 @@ const WorkoutUpdateModal = ({ id, onCreateWorkout }) => {
     const workout_id = params?.updating_workout_id
     const workout = useSelector(state => state?.main?.workouts?.find(workout => workout?.id == workout_id))
     const closeModal = () => {
-        routerNavigator.back()
+        routerNavigator.push("/workouts")
     };
 
     const [note, setNote] = useState(workout?.note || "");

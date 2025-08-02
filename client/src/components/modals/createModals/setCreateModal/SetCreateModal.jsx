@@ -11,28 +11,32 @@ import {
     Spacing,
 } from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
-import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import Warning from '../../../popouts/warning/Warning';
+import { postSet } from '../../../../api/requests/sets/setsRequests';
+import { addSet } from '../../../../store/redux/mainSlice';
+import { useDispatch } from 'react-redux';
 
 const SetCreateModal = ({ id, onCreateSet }) => {
     const routerNavigator = useRouteNavigator();
     const [warningActive, setWarningActive] = useState(false)
-
+    const params = useParams()
+    const {workout_id, exercise_id} = params
     const closeModal = () => {
-        routerNavigator.push("/exercises")
+        routerNavigator.push(`/workouts/${workout_id}/exercises/${exercise_id}/`)
     };
-
+    
     const [weight, setWeight] = useState(0)
     const [reps, setReps] = useState(0)
     const [duration, setDuration] = useState('00:00:00')
-
-    const handleSubmit = useCallback(() => {
+    const dispatch = useDispatch()
+    const handleSubmit = useCallback(async () => {
         if (!weight && !reps && !duration) {
-        alert('Заполните необходимые поля');
+        setWarningActive('Заполните необходимые поля')
         return;
         }
-        // TODO: Здесь должна быть логика обновления
-
+        const new_set = await postSet({weight, reps, duration, workout_id, exercise_id})
+        dispatch(addSet({ workoutId:workout_id, exerciseId:exercise_id, new_set }))
 
         closeModal();
         window.location.reload()
