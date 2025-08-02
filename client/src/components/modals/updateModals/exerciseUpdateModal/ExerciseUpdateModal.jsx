@@ -16,16 +16,14 @@ import handleLog from '../../../../helpers/handleLog';
 
 const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
     const params = useParams();
-    handleLog("url params", params);
     
 
     const workout_id = params?.workout_id;
     const exercise_id = params?.updating_exercise_id;
     
 
-    const workout = useSelector(state => state?.main?.workouts.find(workout => workout?.id == workout_id));
-    const exercise = workout?.workout_exercises.find(ex => ex?.id == exercise_id);
-    handleLog("current exercise", exercise);
+    const workout = useSelector(state => state?.main?.workouts?.find(workout => workout?.id == workout_id));
+    const exercise = workout?.workout_exercises?.find(ex => ex?.id == exercise_id);
 
     const routerNavigator = useRouteNavigator();
 
@@ -42,7 +40,7 @@ const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
 
     useEffect(() => {
         if (exercise) {
-            setTemplate(String(exercise.template?.id || ''));
+            setTemplate(String(exercise?.template?.id || ''));
         }
     }, [exercise]);
 

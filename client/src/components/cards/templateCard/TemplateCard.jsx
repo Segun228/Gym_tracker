@@ -44,7 +44,7 @@ const TemplateCard = ({ template, onOpen }) => {
             <Caption>{"Cоздано "}{formatted || "Недавно"}</Caption>
             <Spacing size={12} />
 
-            <Separator wide />
+            <Separator wide="true" />
             <Spacing size={12} />
             <div
                 style={{

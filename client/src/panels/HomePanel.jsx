@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Panel,
     PanelHeader,
@@ -10,8 +10,18 @@ import {
 import { Icon28AddOutline, Icon24DumbbellsOutline } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import Header from '../components/structure/header/Header';
+import { getThunkTemplates } from '../store/redux/thunks/getThunkTemplates';
+import { useDispatch } from 'react-redux';
+import { getThunkMe } from '../store/redux/thunks/getThunkMe';
+
 
 const HomePanel = ({ id }) => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getThunkMe());
+    }, [dispatch]);
+
     const routerNavigator = useRouteNavigator();
 
     const handleCreateWorkout = () => {

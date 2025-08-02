@@ -17,9 +17,9 @@ const SetUpdateModal = ({ id, onUpdateSet }) => {
     const routerNavigator = useRouteNavigator();
     const params = useParams();
     const { workout_id, exercise_id, updating_set_id } = params;
-    const workout = useSelector(state => state.main?.workouts.find(workout => workout?.id == workout_id));
+    const workout = useSelector(state => state.main?.workouts?.find(workout => workout?.id == workout_id));
     const exercise = workout?.workout_exercises?.find(exercise => exercise?.id == exercise_id);
-    const set = exercise?.sets.find(set => set?.id == updating_set_id);
+    const set = exercise?.sets?.find(set => set?.id == updating_set_id);
 
 
     const [weight, setWeight] = useState(0);

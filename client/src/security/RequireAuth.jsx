@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { router } from "@vkontakte/vk-mini-apps-router";
+import { router, useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import api from "./../api/api.js";
 import { PanelSpinner } from "@vkontakte/vkui";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "./../../config.js";
@@ -8,7 +8,7 @@ import { REFRESH_TOKEN, ACCESS_TOKEN } from "./../../config.js";
 
 const RequireAuth = ({ children }) => {
     const [isAuthorized, setIsAuthorized] = useState(null);
-
+    const routerNavigator = useRouteNavigator()
     useEffect(() => {
         const checkAuth = async () => {
         const accessToken = localStorage.getItem(ACCESS_TOKEN);

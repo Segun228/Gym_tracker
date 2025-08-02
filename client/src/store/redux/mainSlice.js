@@ -15,8 +15,8 @@ const mainSlice = createSlice({
         vk_user_id: null,
         height: 170,
         weight: 70,
-        workouts: workouts,
-        templates: templates
+        workouts: [],
+        templates: []
     },
     reducers: {
         setUser(state, action) {
@@ -192,7 +192,7 @@ const mainSlice = createSlice({
             })
             .addCase(getThunkWorkouts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.workouts = action.payload;
+                state.workouts = action.payload.data;
             })
             .addCase(getThunkWorkouts.rejected, (state, action) => {
                 state.status = 'failed';
@@ -206,7 +206,7 @@ const mainSlice = createSlice({
             })
             .addCase(getThunkTemplates.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.templates = action.payload;
+                state.templates = action.payload?.data;
             })
             .addCase(getThunkTemplates.rejected, (state, action) => {
                 state.status = 'failed';

@@ -18,7 +18,7 @@ const WorkoutUpdateModal = ({ id, onCreateWorkout }) => {
     const routerNavigator = useRouteNavigator();
     const params = useParams()
     const workout_id = params?.updating_workout_id
-    const workout = useSelector(state => state?.main?.workouts.find(workout => workout?.id == workout_id))
+    const workout = useSelector(state => state?.main?.workouts?.find(workout => workout?.id == workout_id))
     const closeModal = () => {
         routerNavigator.back()
     };

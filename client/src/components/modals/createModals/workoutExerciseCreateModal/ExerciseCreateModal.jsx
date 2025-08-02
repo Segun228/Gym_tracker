@@ -30,7 +30,7 @@ const WorkoutExerciseCreateModal = ({ id, onCreateWorkoutExercise }) => {
     const [template, setTemplate] = useState("");
 
     const handleSubmit = useCallback(() => {
-        if (!template.trim()) {
+        if (!template?.trim()) {
             alert('Необходимо выбрать шаблон упражнения');
             return;
         }

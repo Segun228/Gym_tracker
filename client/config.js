@@ -1,8 +1,8 @@
-export const MAIN_URL = "http://localhost:8080/"
+export const MAIN_URL = "http://127.0.0.1:8000/"
 
-export const API_URL = "http://localhost:8080/api/"
+export const API_URL = MAIN_URL + "api/"
 
-export const USER_URL = "http://127.0.0.1:8000/"
+export const USER_URL = MAIN_URL + "user/"
 
 export const ACCESS_TOKEN = "ACCESS"
 
@@ -11,3 +11,7 @@ export const REFRESH_TOKEN = "REFRESH"
 export const DEBUG = true
 
 export const SILENT_MODE = false
+
+export const ADMIN_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0OTM0NTkxLCJpYXQiOjE3NTM2Mzg1OTEsImp0aSI6IjRmZGVlNTZjMmQ2ZjRjZTk4Y2EwNmJkY2ZlZDJjNGE2IiwidXNlcl9pZCI6IjEifQ.-Ki1WBDAMpyf21AF2S02hkHHT36QGyM8E-AYG1keeSg"
+
+export const ADMIN_REFRESH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NDkzMzUxNSwiaWF0IjoxNzUzNjM3NTE1LCJqdGkiOiIwNjM0OWJjMGQyNTc0NDc0OGRmNGI4ODE4ZGM0MmQyYiIsInVzZXJfaWQiOiIxIn0.nodgWLwT7GRPBZB7pbcOe4Ty9SDwgZTVuw-e7jyjv7I"

@@ -2,6 +2,7 @@ import {
     ButtonGroup,
     Panel,
     PanelHeader,
+    Spinner,
 } from '@vkontakte/vkui';
 import { useParams } from '@vkontakte/vk-mini-apps-router';
 import { uid } from 'uid';
@@ -36,16 +37,16 @@ const ExactWorkoutPanel = ({ id }) => {
     return (
         <Panel id={id} style={{paddingBottom:80}}>
             <PanelHeader before={<PanelHeaderBack onClick={() => routeNavigator.push("/workouts")} style={{cursor:"pointer"}}/>}>
-                {workout?.note}
+                {workout?.note || "Тренировка"}
             </PanelHeader>
-            <div
+            <Div
             style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
                 gap: '16px',
                 padding: '16px',
                 paddingInline: 30,
-                marginTop: 50,
+
             }}
             >
                 {exercises && exercises.length > 0 ? (
@@ -53,9 +54,21 @@ const ExactWorkoutPanel = ({ id }) => {
                     <ExerciseCard key={workout.id} exercise={exercise} workout_id={workout.id}/>
                 ))
                 ) : (
-                <div>У вас пока нет ни одного упражнения(</div>
+                <>
+                    <Div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "40px",
+                    width: "90vw"
+                    }}>
+                        <div>У вас пока нет ни одного упражнения(</div>
+                        <Spinner size='l' />
+                    </Div>
+                </>
                 )}
-            </div>
+            </Div>
             <FixedLayout filled vertical="bottom" >
                 <ButtonGroup stretched={true}>
                     <Button onClick={()=>{routeNavigator.push("modal")}} stretched size='l'>Добавить выполненное упражнение</Button>

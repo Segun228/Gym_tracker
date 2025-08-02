@@ -8,6 +8,7 @@ import {
     FixedLayout,
     Div,
     Button,
+    Spinner,
 } from '@vkontakte/vkui';
 import WorkoutCard from '../components/cards/workoutCard/WorkoutCard';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,11 +19,11 @@ import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 const WorkoutsPanel = ({ id }) => {
     const dispatch = useDispatch();
     const routeNavigator = useRouteNavigator();
-/*
+
     useEffect(() => {
         dispatch(getThunkWorkouts());
     }, [dispatch]);
-*/
+
     const workouts = useSelector(state => state.main?.workouts);
 
     return (
@@ -45,7 +46,17 @@ const WorkoutsPanel = ({ id }) => {
                     <WorkoutCard key={workout.id} workout={workout} />
                 ))
                 ) : (
-                <div>У вас пока нет ни одной тренировки(</div>
+                    <Div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "40px",
+                    width: "90vw"
+                    }}>
+                        <div>У вас пока нет ни одного упражнения(</div>
+                        <Spinner size='l' />
+                    </Div>
                 )}
             </div>
             <FixedLayout filled vertical="bottom">

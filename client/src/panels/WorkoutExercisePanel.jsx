@@ -50,7 +50,17 @@ const WorkoutExercisePanel = ({id}) => {
                     <SetCard key={workout.id} set={set}/>
                 ))
                 ) : (
-                <div>У вас пока нет ни одного подхода(</div>
+                    <Div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "40px",
+                    width: "90vw"
+                    }}>
+                        <div>У вас пока нет ни одного подхода(</div>
+                        <Spinner size='l' />
+                    </Div>
                 )}
             </Flex>
             <FixedLayout filled vertical="bottom" >

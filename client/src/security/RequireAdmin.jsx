@@ -1,13 +1,25 @@
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
-
-const RequireAdmin = ({children}) => {
+import {getMe} from "./../api/requests/user/userRequests"
+import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
+const RequireAdmin = async ({children}) => {
     const [isAdmin, setIsAdmin] = useState(null)
-
+    const routerNavigator = useRouteNavigator()
+    try{
+        const user = await getMe()
+        if(user?.isAdmin){
+            setIsAdmin(true)
+        }
+        else{
+            setIsAdmin(false)
+        }
+    }catch(error){
+        console.error(error)
+    }
 
     useEffect(() => {
         if (!isAdmin) {
-        router.set('/auth')
+            routerNavigator.push('/auth')
         }
     }, [isAdmin])
 

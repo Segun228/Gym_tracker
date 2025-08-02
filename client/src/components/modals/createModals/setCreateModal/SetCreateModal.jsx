@@ -25,7 +25,7 @@ const SetCreateModal = ({ id, onCreateSet }) => {
     const [duration, setDuration] = useState('00:00:00')
 
     const handleSubmit = useCallback(() => {
-        if (!note.trim()) {
+        if (!weight && !reps && !duration) {
         alert('Заполните необходимые поля');
         return;
         }
