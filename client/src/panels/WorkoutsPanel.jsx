@@ -61,7 +61,7 @@ const WorkoutsPanel = ({ id }) => {
             </div>
             <FixedLayout filled vertical="bottom">
                 <Div>
-                    <Button size="l" stretched>Добавить тренировку</Button>
+                    <Button onClick={()=>{routeNavigator.push("modal")}} size="l" stretched>Добавить тренировку</Button>
                 </Div>
             </FixedLayout>
         </Panel>

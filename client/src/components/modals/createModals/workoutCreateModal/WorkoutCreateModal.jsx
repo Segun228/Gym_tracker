@@ -28,7 +28,7 @@ const WorkoutCreateModal = ({ id, onCreateWorkout }) => {
         alert('Введите название тренировки');
         return;
         }
-        // TODO: Здесь должна быть логика обновления
+        
         if (onCreateWorkout) {
         onCreateWorkout({ note });
         }
