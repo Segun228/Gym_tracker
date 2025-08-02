@@ -41,7 +41,7 @@ const ExerciseCard = ({ workout_id, exercise, onOpen }) => {
             <Spacing size={12} />
             <Text>Мышечная группа: {exercise?.template?.muscle_group}</Text>
             <Spacing size={8} />
-            <Caption>{"Сделано подходов "}{exercise?.sets.length || 0}</Caption>
+            <Caption>{"Сделано подходов "}{exercise?.sets?.length || 0}</Caption>
             <Spacing size={12} />
 
             <Separator wide />

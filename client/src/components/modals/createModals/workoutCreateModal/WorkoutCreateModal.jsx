@@ -20,7 +20,7 @@ import handleLog from '../../../../helpers/handleLog';
 const WorkoutCreateModal = ({ id }) => {
     const routerNavigator = useRouteNavigator();
     const closeModal = () => {
-        routerNavigator.back()
+        routerNavigator.push("/workouts")
     };
 
     const [note, setNote] = useState('');
@@ -36,6 +36,7 @@ const WorkoutCreateModal = ({ id }) => {
         const new_workout = await postWorkout({date, note, duration})
         dispatch(addWorkout({workout:new_workout}))
         closeModal();
+        window.location.reload()
     }, [note, closeModal]);
 
     useEffect(()=>{

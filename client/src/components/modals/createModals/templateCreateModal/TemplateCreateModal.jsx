@@ -37,6 +37,7 @@ const TemplateCreateModal = ({ id, onCreateWorkout }) => {
         const new_template = await postWorkoutExercise({name, muscle_group})
         dispatch(addTemplate(new_template))
         closeModal();
+        window.location.reload()
     }, [name, muscle_group, closeModal]);
 
     return (

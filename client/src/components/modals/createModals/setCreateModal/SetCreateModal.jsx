@@ -12,9 +12,11 @@ import {
 } from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import Warning from '../../../popouts/warning/Warning';
 
 const SetCreateModal = ({ id, onCreateSet }) => {
     const routerNavigator = useRouteNavigator();
+    const [warningActive, setWarningActive] = useState(false)
 
     const closeModal = () => {
         routerNavigator.push("/exercises")
@@ -30,11 +32,10 @@ const SetCreateModal = ({ id, onCreateSet }) => {
         return;
         }
         // TODO: Здесь должна быть логика обновления
-        if (onCreateSet) {
-        onCreateSet({ note });
-        }
+
 
         closeModal();
+        window.location.reload()
     }, [weight, reps, duration, onCreateSet, closeModal]);
 
     return (
@@ -87,6 +88,7 @@ const SetCreateModal = ({ id, onCreateSet }) => {
             </FormItem>
             <Spacing size={12} />
         </Group>
+        <Warning active={warningActive} setActive={setWarningActive} description={'Введите название тренировки'}/>
         </ModalPage>
     );
 };

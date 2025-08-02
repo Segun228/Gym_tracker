@@ -12,6 +12,7 @@ import {
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import { useSelector } from 'react-redux';
+import Warning from '../../../popouts/warning/Warning';
 
 const SetUpdateModal = ({ id, onUpdateSet }) => {
     const routerNavigator = useRouteNavigator();
@@ -21,6 +22,7 @@ const SetUpdateModal = ({ id, onUpdateSet }) => {
     const exercise = workout?.workout_exercises?.find(exercise => exercise?.id == exercise_id);
     const set = exercise?.sets?.find(set => set?.id == updating_set_id);
 
+    const [warningActive, setWarningActive] = useState(false)
 
     const [weight, setWeight] = useState(0);
     const [reps, setReps] = useState(0);
@@ -56,6 +58,7 @@ const SetUpdateModal = ({ id, onUpdateSet }) => {
         }
 
         closeModal();
+        window.location.reload()
     }, [weight, reps, duration, onUpdateSet, closeModal]);
 
     return (
@@ -110,6 +113,7 @@ const SetUpdateModal = ({ id, onUpdateSet }) => {
                 </FormItem>
                 <Spacing size={12} />
             </Group>
+        <Warning active={warningActive} setActive={setWarningActive} description={'Введите название тренировки'}/>
         </ModalPage>
     );
 };

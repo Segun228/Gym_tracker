@@ -13,6 +13,10 @@ import {
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import SelectList from '../../../atoms/SelectList';
+import Warning from '../../../popouts/warning/Warning';
+import { postExercise } from '../../../../api/requests/exercises/exercisesRequests';
+import { useDispatch } from 'react-redux';
+import { addExercise } from '../../../../store/redux/mainSlice';
 
 const WorkoutExerciseCreateModal = ({ id, onCreateWorkoutExercise }) => {
     const params = useParams()
@@ -26,20 +30,19 @@ const WorkoutExerciseCreateModal = ({ id, onCreateWorkoutExercise }) => {
             routerNavigator.push(`/workouts`);
         }
     };
+    const [warningActive, setWarningActive] = useState(false)
 
     const [template, setTemplate] = useState("");
-
-    const handleSubmit = useCallback(() => {
+    const dispatch = useDispatch()
+    const handleSubmit = useCallback(async () => {
         if (!template?.trim()) {
-            alert('Необходимо выбрать шаблон упражнения');
+            setWarningActive('Необходимо выбрать шаблон упражнения')
             return;
         }
-        // TODO: Здесь должна быть логика обновления
-        if (onCreateWorkoutExercise) {
-            onCreateWorkoutExercise({ template });
-        }
-
+        const new_exercise = await postExercise({template_id:template, workout_id})
+        dispatch(addExercise({workoutId:workout_id, exercise:new_exercise}))
         closeModal();
+        window.location.reload()
     }, [template, onCreateWorkoutExercise, closeModal]);
 
     return (
@@ -61,8 +64,7 @@ const WorkoutExerciseCreateModal = ({ id, onCreateWorkoutExercise }) => {
         >
             <Group>
                 <Spacing size={24} />
-                {/* Компонент для выбора шаблона упражнения */}
-                <FormItem top="Шаблон упражнения" >
+                <FormItem top="Сделанное упражнение" >
                     <SelectList setTemplate={setTemplate} template={template}/>
                 </FormItem>
                 <Spacing size={20} />
@@ -93,6 +95,7 @@ const WorkoutExerciseCreateModal = ({ id, onCreateWorkoutExercise }) => {
                 </FormItem>
                 <Spacing size={12} />
             </Group>
+        <Warning active={warningActive} setActive={setWarningActive} description={'Введите название тренировки'}/>
         </ModalPage>
     );
 };

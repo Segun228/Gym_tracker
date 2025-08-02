@@ -36,7 +36,7 @@ const TemplateUpdateModal = ({ id, onUpdateTemplate }) => {
             setMuscleGroup(initial_template.muscle_group || '');
         }
     }, [initial_template]);
-
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const handleSubmit = async () => {
         if (!name.trim() || !muscle_group.trim()) {
         setWarningActive(true)
@@ -44,7 +44,8 @@ const TemplateUpdateModal = ({ id, onUpdateTemplate }) => {
         }
         const new_template = await putWorkoutExercise({name, muscle_group, id:template_id})
         dispatch(editTemplate({template: new_template}))
-        closeModal();
+        closeModal()
+        window.location.reload()
     }
 
     return (

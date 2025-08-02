@@ -40,6 +40,7 @@ const WorkoutUpdateModal = ({ id, onCreateWorkout }) => {
         const edited = await putWorkout({date, note, duration, id:workout_id})
         dispatch(editWorkout({workout:edited}))
         closeModal();
+        window.location.reload()
     }, [note, onCreateWorkout, closeModal]);
 
     useEffect(() => {

@@ -13,10 +13,12 @@ import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import SelectList from '../../../atoms/SelectList';
 import { useSelector } from 'react-redux';
 import handleLog from '../../../../helpers/handleLog';
+import Warning from '../../../popouts/warning/Warning';
 
 const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
     const params = useParams();
     
+    const [warningActive, setWarningActive] = useState(false)
 
     const workout_id = params?.workout_id;
     const exercise_id = params?.updating_exercise_id;
@@ -57,6 +59,7 @@ const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
         }
         
         closeModal();
+        window.location.reload()
     }, [template, onUpdateWorkoutExercise, closeModal]);
 
     return (
@@ -109,6 +112,7 @@ const WorkoutExerciseUpdateModal = ({ id, onUpdateWorkoutExercise }) => {
                 </FormItem>
                 <Spacing size={12} />
             </Group>
+        <Warning active={warningActive} setActive={setWarningActive} description={'Введите название тренировки'}/>
         </ModalPage>
     );
 };
