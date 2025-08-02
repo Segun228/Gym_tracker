@@ -21,7 +21,7 @@ const mainSlice = createSlice({
     reducers: {
         setUser(state, action) {
             state.username = action.payload?.username || state.username;
-            state.vk_id = action.payload?.vk_id || state.vk_id;
+            state.vk_user_id = action.payload?.vk_user_id || state.vk_user_id;
             state.height = action.payload?.height || state.height;
             state.weight = action.payload?.weight || state.weight;
             handleLog("User set to redux successfully");
@@ -29,7 +29,7 @@ const mainSlice = createSlice({
 
         deleteUser(state) {
             state.username = "";
-            state.vk_id = "";
+            state.vk_user_id = "";
             state.height = 170;
             state.weight = 70;
             handleLog("User deleted from redux successfully");
@@ -37,7 +37,7 @@ const mainSlice = createSlice({
 
         clearStorage(state) {
             state.username = "";
-            state.vk_id = "";
+            state.vk_user_id = "";
             state.height = 170;
             state.weight = 70;
             state.workouts = [];
@@ -51,7 +51,7 @@ const mainSlice = createSlice({
         },
 
         addWorkout(state, action) {
-            state.workouts.push(action.payload.workout);
+            state.workouts = [...state.workouts, action.payload.workout]
             handleLog("Workout added to storage successfully");
         },
 

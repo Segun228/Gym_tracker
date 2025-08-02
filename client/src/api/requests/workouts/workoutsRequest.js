@@ -41,17 +41,17 @@ export const getWorkout = async (id) => {
     }
 }
 
-export const putWorkout = async ({date, note, duration}, id) =>  {
+export const putWorkout = async ({date, note, duration, id}) =>  {
     try{
-        if(!date || !note || !duration || !id){
+        if(!note || !id){
             throw new Error("Error handling empty fields")
         }
         const data = {
-            date, 
+            date: date ? date : null, 
             note, 
-            duration,
-            id
+            duration: duration ? duration : null,
         }
+        handleLog("sending shit", data)
         const response = await api.put(BASE_URL + `${id}/`, data)
         if(!response){
             throw new Error("Error while editing workout")
@@ -68,15 +68,15 @@ export const putWorkout = async ({date, note, duration}, id) =>  {
 
 export const postWorkout = async ({date, note, duration}) =>  {
     try{
-        if(!date || !note || !duration){
+        if(!note){
             throw new Error("Error handling empty fields")
         }
         const data = {
-            date, 
+            date: date ? date : null, 
             note, 
-            duration,
+            duration: duration ? duration : null,
         }
-        const response = await api.post(API_URL + "templates/", data)
+        const response = await api.post(API_URL + "workouts/", data)
         if(!response){
             throw new Error("Error while creating workout")
         }

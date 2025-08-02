@@ -41,7 +41,7 @@ export const getWorkoutExercise = async (id) => {
     }
 }
 
-export const putWorkoutExercise = async ({name, muscle_group}, id) =>  {
+export const putWorkoutExercise = async ({name, muscle_group, id}) =>  {
     try{
         if(!name || !muscle_group || !id){
             throw new Error("Error handling empty fields")

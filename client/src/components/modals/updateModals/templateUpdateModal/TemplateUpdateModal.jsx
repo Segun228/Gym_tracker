@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
     ModalPage,
     ModalPageHeader,
@@ -11,9 +11,13 @@ import {
 } from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Warning from '../../../popouts/warning/Warning';
+import { postWorkoutExercise, putWorkoutExercise } from '../../../../api/requests/templates/templateRequest';
+import { addTemplate, editTemplate } from '../../../../store/redux/mainSlice';
 
 const TemplateUpdateModal = ({ id, onUpdateTemplate }) => {
+    const [warningActive, setWarningActive] = useState(false)
     const params = useParams()
     const template_id = params?.updating_template_id
     const initial_template = useSelector(state => state.main?.templates?.find(template => template?.id == template_id))
@@ -25,7 +29,7 @@ const TemplateUpdateModal = ({ id, onUpdateTemplate }) => {
 
     const [name, setName] = useState('');
     const [muscle_group, setMuscleGroup] = useState('');
-
+    const dispatch = useDispatch()
     useEffect(() => {
         if (initial_template) {
             setName(initial_template.name || '');
@@ -33,16 +37,13 @@ const TemplateUpdateModal = ({ id, onUpdateTemplate }) => {
         }
     }, [initial_template]);
 
-    const handleSubmit = () => {
-        if (!name.trim()) {
-        alert('Введите название шаблона упражнения');
+    const handleSubmit = async () => {
+        if (!name.trim() || !muscle_group.trim()) {
+        setWarningActive(true)
         return;
         }
-        // TODO: Здесь должна быть логика обновления
-        if (onUpdateTemplate) {
-            onUpdateTemplate({ name, muscle_group });
-        }
-
+        const new_template = await putWorkoutExercise({name, muscle_group, id:template_id})
+        dispatch(editTemplate({template: new_template}))
         closeModal();
     }
 
@@ -90,6 +91,7 @@ const TemplateUpdateModal = ({ id, onUpdateTemplate }) => {
             </FormItem>
             <Spacing size={12} />
         </Group>
+        <Warning active={warningActive} setActive={setWarningActive} description={'Введите название тренировки'}/>
         </ModalPage>
     );
 };

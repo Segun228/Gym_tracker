@@ -24,6 +24,7 @@ const WorkoutsPanel = ({ id }) => {
         dispatch(getThunkWorkouts());
     }, [dispatch]);
 
+
     const workouts = useSelector(state => state.main?.workouts);
 
     return (
@@ -43,7 +44,7 @@ const WorkoutsPanel = ({ id }) => {
             >
                 {workouts && workouts.length > 0 ? (
                 workouts.map(workout => (
-                    <WorkoutCard key={workout.id} workout={workout} />
+                    <WorkoutCard key={workout?.id} workout={workout} />
                 ))
                 ) : (
                     <Div style={{

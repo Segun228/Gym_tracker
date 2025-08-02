@@ -10,7 +10,7 @@ import {
     Caption
 } from '@vkontakte/vkui';
 import TemplateDeletePopout from '../../popouts/templateDeletePopout/TemplateDeletePopout';
-import { deleteWorkoutExercise as asyncDeleteTemplate } from '../../../api/requests/templates/workoutExercisesRequest';
+import { deleteWorkoutExercise as asyncDeleteTemplate } from '../../../api/requests/templates/templateRequest';
 import { deleteTemplate, deleteWorkout } from '../../../store/redux/mainSlice';
 import { useDispatch } from 'react-redux';
 

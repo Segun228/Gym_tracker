@@ -1,4 +1,4 @@
-import {getWorkoutExercises} from "./../../../api/requests/templates/workoutExercisesRequest"
+import {getWorkoutExercises} from "../../../api/requests/templates/templateRequest"
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 

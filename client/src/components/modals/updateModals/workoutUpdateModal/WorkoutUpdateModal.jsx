@@ -12,10 +12,13 @@ import {
 } from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Warning from '../../../popouts/warning/Warning';
+import { putWorkout } from '../../../../api/requests/workouts/workoutsRequest';
+import { editWorkout } from '../../../../store/redux/mainSlice';
 
 const WorkoutUpdateModal = ({ id, onCreateWorkout }) => {
+    const dispatch = useDispatch()
     const routerNavigator = useRouteNavigator();
     const params = useParams()
     const workout_id = params?.updating_workout_id
@@ -25,18 +28,17 @@ const WorkoutUpdateModal = ({ id, onCreateWorkout }) => {
     };
 
     const [note, setNote] = useState(workout?.note || "");
+    const [date, setDate] = useState(workout?.date||'')
+    const [duration, setDuration] = useState(workout?.duration||"")
     const [warningActive, setWarningActive] = useState(false)
 
-    const handleSubmit = useCallback(() => {
+    const handleSubmit = useCallback( async () => {
         if (!note.trim()) {
         setWarningActive(true)
         return;
         }
-        // TODO: Здесь должна быть логика обновления
-        if (onCreateWorkout) {
-        onCreateWorkout({ note });
-        }
-
+        const edited = await putWorkout({date, note, duration, id:workout_id})
+        dispatch(editWorkout({workout:edited}))
         closeModal();
     }, [note, onCreateWorkout, closeModal]);
 
@@ -74,9 +76,28 @@ const WorkoutUpdateModal = ({ id, onCreateWorkout }) => {
             />
             </FormItem>
 
-            <Spacing size={24} />
-
-            <FormItem>
+            <Spacing size={10} />
+            <FormItem
+            top="Дата тренировки"
+            >
+                <Input
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    placeholder="Дата тренировки"
+                    type='date'
+                />
+            </FormItem>
+            <Spacing size={10} />
+            <FormItem
+            top="Продолжительность тренировки"
+            >
+                <Input
+                    value={duration}
+                    onChange={(e) => setDuration(e.target.value)}
+                    placeholder="Продолжительность тренировки"
+                    type='time'
+                />
+            <FormItem/>
             <Button size="l" stretched onClick={handleSubmit} appearance="accent">
                 Изменить тренировку
             </Button>

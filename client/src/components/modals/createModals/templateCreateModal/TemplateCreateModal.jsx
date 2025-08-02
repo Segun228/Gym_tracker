@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
     ModalPage,
     ModalPageHeader,
@@ -12,8 +12,13 @@ import {
 } from '@vkontakte/vkui';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import Warning from '../../../popouts/warning/Warning';
+import { postWorkoutExercise } from '../../../../api/requests/templates/templateRequest';
+import { addTemplate } from '../../../../store/redux/mainSlice';
+import { useDispatch } from 'react-redux';
 
 const TemplateCreateModal = ({ id, onCreateWorkout }) => {
+    const [warningActive, setWarningActive] = useState(false)
     const routerNavigator = useRouteNavigator();
 
     const closeModal = () => {
@@ -22,20 +27,17 @@ const TemplateCreateModal = ({ id, onCreateWorkout }) => {
 
     const [name, setName] = useState('');
     const [muscle_group, setMuscleGroup] = useState('');
+    const dispatch = useDispatch()
 
-
-    const handleSubmit = useCallback(() => {
+    const handleSubmit = useCallback( async() => {
         if (!name.trim()) {
-        alert('Введите название шаблона упражнения');
+        setWarningActive('Введите название шаблона упражнения')
         return;
         }
-        // TODO: Здесь должна быть логика обновления
-        if (onCreateWorkout) {
-        onCreateWorkout({ name, muscle_group });
-        }
-
+        const new_template = await postWorkoutExercise({name, muscle_group})
+        dispatch(addTemplate(new_template))
         closeModal();
-    }, [name, muscle_group, onCreateWorkout, closeModal]);
+    }, [name, muscle_group, closeModal]);
 
     return (
         <ModalPage
@@ -81,6 +83,7 @@ const TemplateCreateModal = ({ id, onCreateWorkout }) => {
             </FormItem>
             <Spacing size={12} />
         </Group>
+        <Warning active={warningActive} setActive={setWarningActive} description={'Введите название тренировки'}/>
         </ModalPage>
     );
 };

@@ -48,7 +48,7 @@ const ExercisesPanel = ({ id }) => {
             >
                 {templates && templates.length > 0 ? (
                 templates.map(template => (
-                    <TemplateCard key={template.id} template={template} />
+                    <TemplateCard key={template?.id} template={template} />
                 ))
                 ) : (
                     <Div style={{

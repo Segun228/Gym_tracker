@@ -38,7 +38,7 @@ const WorkoutCard = ({ workout, onOpen }) => {
         >
         <Group mode="plain" style={{ padding: 0 }}>
             <div style={{ marginBottom: 12 }}>
-            <Text style={{ color: 'gray' }}>{workout?.date || "недавно"}</Text>
+            <Text style={{ color: 'gray' }}>{workout?.created_at || "недавно"}</Text>
             </div>
 
             <Title level="3" weight="2" style={{ marginBottom: 8 }}>
