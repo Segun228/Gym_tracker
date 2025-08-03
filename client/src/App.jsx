@@ -53,7 +53,7 @@ const AppContent = () => {
 
   return (
     <>
-      <SplitLayout header={<Header />}>
+      <SplitLayout>
         <SplitCol>
           <ModalRouter />
           <div style={{paddingTop:0}}>

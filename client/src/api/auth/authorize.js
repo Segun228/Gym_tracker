@@ -2,11 +2,11 @@ import bridge from '@vkontakte/vk-bridge';
 import { instance } from './instance';
 import handleLog from '../../helpers/handleLog';
 import vkBridge from '@vkontakte/vk-bridge';
-import { ADMIN_ACCESS_TOKEN, ADMIN_REFRESH_TOKEN, ACCESS_TOKEN, REFRESH_TOKEN } from '../../../config';
+import { ADMIN_ACCESS_TOKEN, ADMIN_REFRESH_TOKEN, ACCESS_TOKEN, REFRESH_TOKEN, DEBUG } from '../../../config';
 
 const handleAdminLogIn = () => {
     try{
-        if(ADMIN_ACCESS_TOKEN && ADMIN_REFRESH_TOKEN){
+        if(ADMIN_ACCESS_TOKEN && ADMIN_REFRESH_TOKEN && DEBUG){
             localStorage.setItem(ACCESS_TOKEN, ADMIN_ACCESS_TOKEN)
             localStorage.setItem(REFRESH_TOKEN, ADMIN_REFRESH_TOKEN)
             handleLog("admin tokens set successfully")
@@ -32,7 +32,7 @@ export const authorize = async () => {
         const base64Params = btoa(JSON.stringify(launchParams));
 
         const response = await instance.post(
-            'user/login/', null,
+            'login/', null,
             {headers: {
                 Authorization: `VK ${base64Params}`,
             }}

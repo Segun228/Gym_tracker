@@ -55,7 +55,7 @@ const WorkoutsPanel = ({ id }) => {
                     gap: "40px",
                     width: "90vw"
                     }}>
-                        <div>У вас пока нет ни одного упражнения(</div>
+                        <div>У вас пока нет ни одной тренировки(</div>
                         <Spinner size='l' />
                     </Div>
                 )}
