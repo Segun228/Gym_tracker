@@ -1,6 +1,6 @@
-export const MAIN_URL = "http://127.0.0.1:8000/"
+export const HELP_URL = "http://127.0.0.1:8000/"
 
-export const HELP_URL = "https://gym-tracker-backend-w4x0.onrender.com/"
+export const MAIN_URL = "https://gym-tracker-backend-w4x0.onrender.com/"
 
 export const API_URL = MAIN_URL + "api/"
 
